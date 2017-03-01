@@ -1,0 +1,1 @@
+"uart\uart.c" BROWSE INCDIR(.\delay;.\uart) DEBUG OBJECTEXTEND PRINT(.\uart.lst) TABS (2) OBJECT(uart.obj)

@@ -1,0 +1,403 @@
+<html>
+<body>
+<pre>
+<h1>µVision Build Log</h1>
+<h2>Project:</h2>
+D:\SingleChipMicrocomputer\LED8 8\LED.uvproj
+Project File Date:  12/07/2015
+
+<h2>Output:</h2>
+Rebuild target 'Target 1'
+assembling STARTUP.A51...
+compiling LED.c...
+LED.c(5): error C141: syntax error near ';'
+LED.c(5): error C141: syntax error near '0x04'
+compiling delay.c...
+Target not created
+Build target 'Target 1'
+compiling LED.c...
+LED.c(5): error C141: syntax error near ';'
+LED.c(5): error C141: syntax error near '0x04'
+Target not created
+Build target 'Target 1'
+compiling LED.c...
+LED.c(40): warning C206: '_nop_': missing function-prototype
+LED.c(40): error C264: intrinsic '_nop_': declaration/activation error
+LED.c(57): error C211: call not to a function
+Target not created
+Build target 'Target 1'
+compiling LED.c...
+LED.c(40): warning C206: '_nop': missing function-prototype
+LED.c(56): warning C206: '_nop_': missing function-prototype
+LED.c(56): error C264: intrinsic '_nop_': declaration/activation error
+LED.c(57): error C211: call not to a function
+Target not created
+Build target 'Target 1'
+compiling LED.c...
+LED.c(41): warning C206: '_nop': missing function-prototype
+LED.c(58): error C211: call not to a function
+Target not created
+Build target 'Target 1'
+compiling LED.c...
+LED.c(41): warning C206: '_nop': missing function-prototype
+linking...
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?_DELAY_S?DELAY
+*** WARNING L1: UNRESOLVED EXTERNAL SYMBOL
+    SYMBOL:  _NOP
+    MODULE:  LED.obj (LED)
+*** WARNING L2: REFERENCE MADE TO UNRESOLVED EXTERNAL
+    SYMBOL:  _NOP
+    MODULE:  LED.obj (LED)
+    ADDRESS: 0163H
+Program Size: data=19.0 xdata=0 code=385
+creating hex file from "LED"...
+"LED" - 0 Error(s), 4 Warning(s).
+Build target 'Target 1'
+compiling LED.c...
+linking...
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?_DELAY_S?DELAY
+Program Size: data=19.0 xdata=0 code=383
+creating hex file from "LED"...
+"LED" - 0 Error(s), 1 Warning(s).
+Build target 'Target 1'
+compiling LED.c...
+LED.c(64): warning C280: 'i': unreferenced local variable
+LED.c(64): warning C280: 'j': unreferenced local variable
+linking...
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?_SENDSEG?LED
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?CO?LED
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?_DELAY_S?DELAY
+Program Size: data=19.0 xdata=0 code=277
+creating hex file from "LED"...
+"LED" - 0 Error(s), 5 Warning(s).
+Build target 'Target 1'
+compiling LED.c...
+LED.c(64): warning C280: 'i': unreferenced local variable
+LED.c(64): warning C280: 'j': unreferenced local variable
+linking...
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?_SENDSEG?LED
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?CO?LED
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?_DELAY_S?DELAY
+Program Size: data=19.0 xdata=0 code=277
+creating hex file from "LED"...
+"LED" - 0 Error(s), 5 Warning(s).
+Build target 'Target 1'
+compiling LED.c...
+LED.c(64): warning C280: 'i': unreferenced local variable
+LED.c(64): warning C280: 'j': unreferenced local variable
+linking...
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?_SENDSEG?LED
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?CO?LED
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?_DELAY_S?DELAY
+Program Size: data=19.0 xdata=0 code=277
+creating hex file from "LED"...
+"LED" - 0 Error(s), 5 Warning(s).
+Build target 'Target 1'
+compiling LED.c...
+LED.c(64): warning C280: 'i': unreferenced local variable
+LED.c(64): warning C280: 'j': unreferenced local variable
+linking...
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?_SENDSEG?LED
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?CO?LED
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?_DELAY_S?DELAY
+Program Size: data=19.0 xdata=0 code=277
+creating hex file from "LED"...
+"LED" - 0 Error(s), 5 Warning(s).
+Build target 'Target 1'
+compiling LED.c...
+LED.c(64): warning C280: 'i': unreferenced local variable
+LED.c(64): warning C280: 'j': unreferenced local variable
+linking...
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?_SENDSEG?LED
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?CO?LED
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?_DELAY_S?DELAY
+Program Size: data=19.0 xdata=0 code=277
+creating hex file from "LED"...
+"LED" - 0 Error(s), 5 Warning(s).
+Build target 'Target 1'
+compiling LED.c...
+LED.c(64): warning C280: 'i': unreferenced local variable
+LED.c(64): warning C280: 'j': unreferenced local variable
+linking...
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?_SENDSEG?LED
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?CO?LED
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?_DELAY_S?DELAY
+Program Size: data=19.0 xdata=0 code=277
+creating hex file from "LED"...
+"LED" - 0 Error(s), 5 Warning(s).
+Build target 'Target 1'
+compiling LED.c...
+LED.c(64): warning C280: 'i': unreferenced local variable
+LED.c(64): warning C280: 'j': unreferenced local variable
+linking...
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?_SENDSEG?LED
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?CO?LED
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?_DELAY_S?DELAY
+Program Size: data=19.0 xdata=0 code=277
+creating hex file from "LED"...
+"LED" - 0 Error(s), 5 Warning(s).
+Build target 'Target 1'
+compiling LED.c...
+LED.c(64): warning C280: 'i': unreferenced local variable
+LED.c(64): warning C280: 'j': unreferenced local variable
+linking...
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?CO?LED
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?_DELAY_S?DELAY
+Program Size: data=19.0 xdata=0 code=277
+creating hex file from "LED"...
+"LED" - 0 Error(s), 4 Warning(s).
+Build target 'Target 1'
+compiling LED.c...
+LED.c(65): warning C280: 'i': unreferenced local variable
+LED.c(65): warning C280: 'j': unreferenced local variable
+compiling delay.c...
+compiling uart.c...
+linking...
+*** ERROR L104: MULTIPLE PUBLIC DEFINITIONS
+    SYMBOL:  UART_ISR
+    MODULE:  uart.obj (UART)
+*** ERROR L104: MULTIPLE PUBLIC DEFINITIONS
+    SYMBOL:  _UART_SENDSTR
+    MODULE:  uart.obj (UART)
+*** ERROR L104: MULTIPLE PUBLIC DEFINITIONS
+    SYMBOL:  _UART_SENDBYTE
+    MODULE:  uart.obj (UART)
+*** ERROR L104: MULTIPLE PUBLIC DEFINITIONS
+    SYMBOL:  UART_INIT
+    MODULE:  uart.obj (UART)
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?_UART_SENDSTR?LED
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?CO?LED
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?_DELAY_S?DELAY
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?UART_INIT?UART
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?_UART_SENDSTR?UART
+*** WARNING L5: CODE SPACE MEMORY OVERLAP
+    FROM:    0023H
+    TO:      0025H
+Program Size: data=21.0 xdata=0 code=493
+Target not created
+Build target 'Target 1'
+compiling LED.c...
+LED.c(65): warning C280: 'i': unreferenced local variable
+LED.c(65): warning C280: 'j': unreferenced local variable
+linking...
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?CO?LED
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?_DELAY_S?DELAY
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?_UART_SENDSTR?UART
+Program Size: data=20.0 xdata=0 code=399
+creating hex file from "LED"...
+"LED" - 0 Error(s), 5 Warning(s).
+Build target 'Target 1'
+compiling LED.c...
+LED.c(65): warning C280: 'i': unreferenced local variable
+LED.c(65): warning C280: 'j': unreferenced local variable
+linking...
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?CO?LED
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?_DELAY_S?DELAY
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?_UART_SENDSTR?UART
+Program Size: data=20.0 xdata=0 code=399
+creating hex file from "LED"...
+"LED" - 0 Error(s), 5 Warning(s).
+Build target 'Target 1'
+compiling LED.c...
+LED.c(65): warning C280: 'i': unreferenced local variable
+LED.c(65): warning C280: 'j': unreferenced local variable
+linking...
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?CO?LED
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?_DELAY_S?DELAY
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?_UART_SENDSTR?UART
+Program Size: data=20.0 xdata=0 code=399
+creating hex file from "LED"...
+"LED" - 0 Error(s), 5 Warning(s).
+Build target 'Target 1'
+compiling LED.c...
+LED.c(65): warning C280: 'i': unreferenced local variable
+LED.c(65): warning C280: 'j': unreferenced local variable
+linking...
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?CO?LED
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?_DELAY_S?DELAY
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?_UART_SENDSTR?UART
+Program Size: data=20.0 xdata=0 code=399
+creating hex file from "LED"...
+"LED" - 0 Error(s), 5 Warning(s).
+Build target 'Target 1'
+compiling LED.c...
+LED.c(65): warning C280: 'i': unreferenced local variable
+LED.c(65): warning C280: 'j': unreferenced local variable
+linking...
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?CO?LED
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?_DELAY_S?DELAY
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?_UART_SENDSTR?UART
+Program Size: data=20.0 xdata=0 code=399
+creating hex file from "LED"...
+"LED" - 0 Error(s), 5 Warning(s).
+Build target 'Target 1'
+compiling LED.c...
+LED.c(65): warning C280: 'i': unreferenced local variable
+LED.c(65): warning C280: 'j': unreferenced local variable
+linking...
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?CO?LED
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?_DELAY_S?DELAY
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?_UART_SENDSTR?UART
+Program Size: data=20.0 xdata=0 code=399
+creating hex file from "LED"...
+"LED" - 0 Error(s), 5 Warning(s).
+Build target 'Target 1'
+compiling LED.c...
+LED.c(65): warning C280: 'i': unreferenced local variable
+LED.c(65): warning C280: 'j': unreferenced local variable
+linking...
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?CO?LED
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?_DELAY_S?DELAY
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?_UART_SENDSTR?UART
+Program Size: data=20.0 xdata=0 code=399
+creating hex file from "LED"...
+"LED" - 0 Error(s), 5 Warning(s).
+Build target 'Target 1'
+compiling LED.c...
+LED.c(65): warning C280: 'i': unreferenced local variable
+LED.c(65): warning C280: 'j': unreferenced local variable
+linking...
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?CO?LED
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?_DELAY_S?DELAY
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?_UART_SENDSTR?UART
+Program Size: data=20.0 xdata=0 code=398
+creating hex file from "LED"...
+"LED" - 0 Error(s), 5 Warning(s).
+Build target 'Target 1'
+compiling LED.c...
+LED.c(65): warning C280: 'i': unreferenced local variable
+LED.c(65): warning C280: 'j': unreferenced local variable
+linking...
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?CO?LED
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?_DELAY_S?DELAY
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?_UART_SENDSTR?UART
+Program Size: data=20.0 xdata=0 code=399
+creating hex file from "LED"...
+"LED" - 0 Error(s), 5 Warning(s).
+Build target 'Target 1'
+compiling LED.c...
+LED.c(65): warning C280: 'i': unreferenced local variable
+LED.c(65): warning C280: 'j': unreferenced local variable
+linking...
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?CO?LED
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?_DELAY_S?DELAY
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?_UART_SENDSTR?UART
+Program Size: data=20.0 xdata=0 code=399
+creating hex file from "LED"...
+"LED" - 0 Error(s), 5 Warning(s).
+Build target 'Target 1'
+compiling LED.c...
+LED.c(65): warning C280: 'i': unreferenced local variable
+LED.c(65): warning C280: 'j': unreferenced local variable
+linking...
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?CO?LED
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?_DELAY_S?DELAY
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?_UART_SENDSTR?UART
+Program Size: data=20.0 xdata=0 code=399
+creating hex file from "LED"...
+"LED" - 0 Error(s), 5 Warning(s).
+Build target 'Target 1'
+compiling LED.c...
+LED.c(65): warning C280: 'i': unreferenced local variable
+LED.c(65): warning C280: 'j': unreferenced local variable
+linking...
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?CO?LED
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?_DELAY_S?DELAY
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?_UART_SENDSTR?UART
+Program Size: data=20.0 xdata=0 code=399
+creating hex file from "LED"...
+"LED" - 0 Error(s), 5 Warning(s).
+Build target 'Target 1'
+compiling LED.c...
+LED.c(65): warning C280: 'i': unreferenced local variable
+LED.c(65): warning C280: 'j': unreferenced local variable
+linking...
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?CO?LED
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?_DELAY_S?DELAY
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?_UART_SENDSTR?UART
+Program Size: data=20.0 xdata=0 code=399
+creating hex file from "LED"...
+"LED" - 0 Error(s), 5 Warning(s).
+Build target 'Target 1'
+compiling LED.c...
+LED.c(65): warning C280: 'i': unreferenced local variable
+LED.c(65): warning C280: 'j': unreferenced local variable
+linking...
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?CO?LED
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?_DELAY_S?DELAY
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?_UART_SENDSTR?UART
+Program Size: data=20.0 xdata=0 code=414
+creating hex file from "LED"...
+"LED" - 0 Error(s), 5 Warning(s).

@@ -1,0 +1,103 @@
+C51 COMPILER V9.51   LED                                                                   12/07/2015 20:04:30 PAGE 1   
+
+
+C51 COMPILER V9.51, COMPILATION OF MODULE LED
+OBJECT MODULE PLACED IN LED.OBJ
+COMPILER INVOKED BY: D:\360Downloads\C51\BIN\C51.EXE LED.c BROWSE INCDIR(.\delay;.\uart) DEBUG OBJECTEXTEND TABS(2)
+
+line level    source
+
+   1          #include <reg52.h>
+   2          #include <intrins.h>
+   3          #include "delay.h"
+   4          #include "uart.h"
+   5          
+   6          
+   7          unsigned char segout[8] = {0x01,0x02,0x04,0x08,0x10,0x20,0x40,0x80};
+   8          unsigned char code tab[] = (0x00,0x6c,0x92,0x82,0x44,0x28,0x10,0x00);
+   9          
+  10          
+  11          sbit LATCH = P1^0;
+  12          sbit SRCLK = P1^1;
+  13          sbit SER = P1^2;
+  14          
+  15          sbit LATCH_B = P2^0;
+  16          sbit SRCLK_B = P2^1;
+  17          sbit SER_B = P2^2;
+  18          
+  19          
+  20          void SendByte(unsigned char dat)
+  21          {
+  22   1          unsigned char i;
+  23   1        
+  24   1          for(i = 0;i < 8;i ++)
+  25   1          {
+  26   2              SRCLK = 0;
+  27   2              SER = dat&0x80;
+  28   2              dat <<= 1;
+  29   2              SRCLK = 1;
+  30   2          }
+  31   1      }
+  32          
+  33          
+  34          void Send2Byte(unsigned char dat1,unsigned char dat2)
+  35          {
+  36   1          SendByte(dat1);
+  37   1          SendByte(dat2);
+  38   1      }
+  39          
+  40          void Out595(void)
+  41          {
+  42   1          _nop_();
+  43   1          LATCH = 1;
+  44   1          LATCH = 0;
+  45   1      }
+  46          
+  47          void SendSeg(unsigned char dat)
+  48          {
+  49   1          unsigned char i;
+  50   1          for(i = 0;i < 8;i ++)
+  51   1          {
+  52   2              SRCLK_B = 0;
+  53   2              SER_B = dat & 0x80;
+  54   2              dat <<= 1;
+  55   2              SRCLK_B = 1;
+C51 COMPILER V9.51   LED                                                                   12/07/2015 20:04:30 PAGE 2   
+
+  56   2          }
+  57   1          LATCH_B = 1;
+  58   1          _nop_();
+  59   1          LATCH_B = 0;
+  60   1      }
+  61          
+  62          
+  63          void main()
+  64          {
+  65   1          unsigned char i,j;
+  66   1          uart_init();
+  67   1          while(1)
+  68   1          {
+  69   2              SendSeg(0xaa);
+  70   2              Send2Byte(0x00,0xff);//第一个参数是行，第二个参数是列
+  71   2              Out595();
+  72   2              delay_ms(1);
+  73   2              Send2Byte(0xff,0xff);
+  74   2              Out595();
+  75   2          }
+  76   1      }
+*** WARNING C280 IN LINE 65 OF LED.c: 'i': unreferenced local variable
+*** WARNING C280 IN LINE 65 OF LED.c: 'j': unreferenced local variable
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =     92    ----
+   CONSTANT SIZE    =      1    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =      8       2
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  2 WARNING(S),  0 ERROR(S)
