@@ -1,0 +1,7 @@
+"STARTUP.obj",
+"test.obj",
+"delay.obj",
+"uart.obj",
+"tmp_hum_new.obj",
+"key.obj" 
+TO "test" 

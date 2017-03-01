@@ -1,0 +1,186 @@
+C51 COMPILER V9.53.0.0   TMP_HUM_NEW                                                       12/06/2016 00:26:31 PAGE 1   
+
+
+C51 COMPILER V9.53.0.0, COMPILATION OF MODULE TMP_HUM_NEW
+OBJECT MODULE PLACED IN tmp_hum_new.obj
+COMPILER INVOKED BY: C:\Keil_MDK\C51\BIN\C51.EXE tmp_hum_new\tmp_hum_new.c OPTIMIZE(8,SPEED) BROWSE INCDIR(.\delay;.\uar
+                    -t;.\tmp_hum_new;.\nine_key) DEBUG OBJECTEXTEND PRINT(.\tmp_hum_new.lst) TABS(2) OBJECT(tmp_hum_new.obj)
+
+line level    source
+
+   1          
+   2          
+   3          /********************************************************************
+   4          
+   5          库使用方法： 单片机时钟为11.0592M，适用于低速12分频单片机
+   6          只有DHT11.h中的两个函数可以被外界函数调用
+   7          可以在延时1S之后直接读数据（中间包含了初始化），两次读取数据时间间隔最好
+   8          大于2S 
+   9          整理人:张家越     整理时间：2012-04-30
+  10          个人空间：hi.baidu.com/zhangjiayue123/home/ 
+  11           
+  12          **********************************************************************/
+  13          #include "tmp_hum_new.h"
+  14          #include <reg52.h>
+  15          //请根据自己的dht11 接的IO 口来改动位定义
+  16          sbit dht11 = P1^3;
+  17          //防止在与硬件通信时发生死循环的计数范围
+  18          #define NUMBER 20
+  19          #define SIZE 5
+  20          static unsigned char status;
+  21          //存放五字节数据的数组
+  22          static unsigned char value_array[SIZE];
+  23          /*可在其他的文件引用温湿度值,实际是温度的整数的10 倍
+  24          如dht11 读回的温度是26,则temp_value = 260, 湿度同理*/
+  25          int temp_value, humi_value;
+  26          static unsigned char ReadValue(void);
+  27          extern void Delay_1ms(unsigned int ms)
+  28          {
+  29   1      unsigned int x, y;
+  30   1      for(x = ms; x > 0; x--)
+  31   1      {
+  32   2      for(y = 124; y > 0; y--);
+  33   2      }
+  34   1      }
+  35          static void Delay_10us(void)
+  36          {
+  37   1      unsigned char i;
+  38   1      i--;
+  39   1      i--;
+  40   1      i--;
+  41   1      i--;
+  42   1      i--;
+  43   1      i--;
+  44   1      }
+  45          /*读一个字节的数据*/
+  46          static unsigned char ReadValue(void)
+  47          {
+  48   1      unsigned char count, value = 0, i;
+  49   1      status = OK; //设定标志为正常状态
+  50   1      for(i = 8; i > 0; i--)
+  51   1      {
+  52   2      //高位在先
+  53   2      value <<= 1;
+  54   2      count = 0;
+C51 COMPILER V9.53.0.0   TMP_HUM_NEW                                                       12/06/2016 00:26:31 PAGE 2   
+
+  55   2      //每一位数据前会有一个50us 的低电平时间.等待50us 低电平结束
+  56   2      while(dht11 == 0 && count++ < NUMBER);
+  57   2      if(count >= NUMBER)
+  58   2      {
+  59   3      status = ERROR; //设定错误标志
+  60   3      return 0; //函数执行过程发生错误就退出函数
+  61   3      }
+  62   2      //26-28us 的高电平表示该位是0,为70us 高电平表该位1
+  63   2      Delay_10us();
+  64   2      Delay_10us();
+  65   2      Delay_10us();
+  66   2      //延时30us 后检测数据线是否还是高电平
+  67   2      if(dht11 != 0)
+  68   2      {
+  69   3      //进入这里表示该位是1
+  70   3      value++;
+  71   3      //等待剩余(约40us)的高电平结束
+  72   3      while(dht11 != 0 && count++ < NUMBER)
+  73   3      {
+  74   4      dht11 = 1;
+  75   4      }
+  76   3      if(count >= NUMBER)
+  77   3      {
+  78   4      status = ERROR; //设定错误标志
+  79   4      return 0;
+  80   4      }
+  81   3      }
+  82   2      }
+  83   1      return (value);
+  84   1      }
+  85          //读一次的数据,共五字节
+  86          extern unsigned char ReadTempAndHumi(void)
+  87          {
+  88   1      unsigned char i = 0, check_value = 0,count = 0;
+  89   1      EA = 0;
+  90   1      dht11 = 0; //拉低数据线大于18ms 发送开始信号
+  91   1      Delay_1ms(20); //需大于18 毫秒
+  92   1      dht11 = 1; //释放数据线,用于检测低电平的应答信号
+  93   1      //延时20-40us,等待一段时间后检测应答信号,应答信号是从机拉低数据线80us
+  94   1      Delay_10us();
+  95   1      Delay_10us();
+  96   1      Delay_10us();
+  97   1      Delay_10us();
+  98   1      if(dht11 != 0) //检测应答信号,应答信号是低电平
+  99   1      {
+ 100   2      //没应答信号
+ 101   2      EA = 1;
+ 102   2      return ERROR;
+ 103   2      }
+ 104   1      else
+ 105   1      {
+ 106   2      //有应答信号
+ 107   2      while(dht11 == 0 && count++ < NUMBER); //等待应答信号结束
+ 108   2      if(count >= NUMBER) //检测计数器是否超过了设定的范围
+ 109   2      {
+ 110   3      dht11 = 1;
+ 111   3      EA = 1;
+ 112   3      return ERROR; //读数据出错,退出函数
+ 113   3      }
+ 114   2      count = 0;
+ 115   2      dht11 = 1;//释放数据线
+ 116   2      //应答信号后会有一个80us 的高电平，等待高电平结束
+C51 COMPILER V9.53.0.0   TMP_HUM_NEW                                                       12/06/2016 00:26:31 PAGE 3   
+
+ 117   2      while(dht11 != 0 && count++ < NUMBER);
+ 118   2      if(count >= NUMBER)
+ 119   2      {
+ 120   3      dht11 = 1;
+ 121   3      EA = 1;
+ 122   3      return ERROR; //退出函数
+ 123   3      }
+ 124   2      //读出湿.温度值
+ 125   2      for(i = 0; i < SIZE; i++)
+ 126   2      {
+ 127   3        value_array[i] = ReadValue();
+ 128   3        if(status == ERROR)//调用ReadValue()读数据出错会设定status 为ERROR
+ 129   3        {
+ 130   4        dht11 = 1;
+ 131   4        EA = 1;
+ 132   4        return ERROR;
+ 133   4        }
+ 134   3        //读出的最后一个值是校验值不需加上去
+ 135   3        if(i != SIZE - 1)
+ 136   3        {
+ 137   4        //读出的五字节数据中的前四字节数据和等于第五字节数据表示成功
+ 138   4        check_value += value_array[i];
+ 139   4        }
+ 140   3      } //end for
+ 141   2        //在没用发生函数调用失败时进行校验
+ 142   2        if(check_value == value_array[SIZE - 1])
+ 143   2        {
+ 144   3          //将温湿度扩大10 倍方便分离出每一位
+ 145   3          humi_value = value_array[0] * 10;
+ 146   3          temp_value = value_array[2] * 10;
+ 147   3          dht11 = 1;
+ 148   3          EA = 1;
+ 149   3          return OK; //正确的读出dht11 输出的数据
+ 150   3        }
+ 151   2        else
+ 152   2        {
+ 153   3        //校验数据出错
+ 154   3          EA = 1;
+ 155   3          return ERROR;
+ 156   3        }
+ 157   2      }
+ 158   1      }
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    273    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =     10       1
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

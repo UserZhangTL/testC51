@@ -1,1 +1,0 @@
-"delay\delay.c" OPTIMIZE (8,SPEED) BROWSE INCDIR(.\delay;.\uart;.\NRF24L01__Sender;.\nine_key;.\HandSignal) DEBUG OBJECTEXTEND PRINT(.\delay.lst) TABS (2) OBJECT(delay.obj)
