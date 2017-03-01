@@ -1,4 +1,4 @@
-C51 COMPILER V9.53.0.0   KEY                                                               12/06/2016 00:26:31 PAGE 1   
+C51 COMPILER V9.53.0.0   KEY                                                               03/01/2017 20:23:43 PAGE 1   
 
 
 C51 COMPILER V9.53.0.0, COMPILATION OF MODULE KEY
@@ -62,7 +62,7 @@ line level    source
   52   4                    L3 = 1;
   53   4              if((H1 == 0) && (H2 == 1) && (H3 == 1))           //ledµÚÒ»ÁÐ
   54   4              {
-C51 COMPILER V9.53.0.0   KEY                                                               12/06/2016 00:26:31 PAGE 2   
+C51 COMPILER V9.53.0.0   KEY                                                               03/01/2017 20:23:43 PAGE 2   
 
   55   5                return 7;
   56   5                      }
@@ -126,7 +126,7 @@ line level    source
  114   4              {
  115   5                return 9;
  116   5                      }
-C51 COMPILER V9.53.0.0   KEY                                                               12/06/2016 00:26:31 PAGE 3   
+C51 COMPILER V9.53.0.0   KEY                                                               03/01/2017 20:23:43 PAGE 3   
 
  117   4              else if((H1 == 1) && (H2 == 0) && (H3 == 1))
  118   4              {

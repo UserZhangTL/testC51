@@ -67,16 +67,10 @@ void main()
 	
     while(1)
 		{
-				P0 = 0x00;
-		    P1 = 0x00;
-			  P2 = 0x00;
-			  P3 = 0x00;
-			  delay_ms(300);
-			  P0 = 0xff;
-		    P1 = 0xff;
-			  P2 = 0xff;
-			  P3 = 0xff;
-			  delay_ms(300);
+				P0 = 0x55;
+			  delay_ms(200);
+			  P0 = 0xAA;
+			  delay_ms(200);
 		}
 		
 
