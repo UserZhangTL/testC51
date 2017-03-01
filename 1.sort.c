@@ -1,6 +1,12 @@
 #include <stdio.h>
 //≤Â»Î≈≈–Ú 
 
+void func()
+{
+    
+}
+
+
 int main(void)
 {
 	int num[10] = {10,13,2,42,35,4,43,64,42,65};
