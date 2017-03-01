@@ -67,6 +67,8 @@ void main()
 	
     while(1)
 		{
+			  P1 = 0xff;//new line for undo
+			
 				P0 = 0x55;
 			  delay_ms(200);
 			  P0 = 0xAA;

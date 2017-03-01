@@ -1,4 +1,4 @@
-BL51 BANKED LINKER/LOCATER V6.22                                                        03/01/2017  20:23:44  PAGE 1
+BL51 BANKED LINKER/LOCATER V6.22                                                        03/01/2017  20:45:46  PAGE 1
 
 
 BL51 BANKED LINKER/LOCATER V6.22, INVOKED BY:
@@ -48,21 +48,21 @@ LINK MAP OF MODULE:  test (?C_STARTUP)
             CODE    0299H     0080H     UNIT         ?CO?TEST
             CODE    0319H     004CH     UNIT         ?PR?READVALUE?TMP_HUM_NEW
             CODE    0365H     002DH     UNIT         ?PR?UART_ISR?UART
-            CODE    0392H     0020H     UNIT         ?PR?MAIN?TEST
-            CODE    03B2H     001EH     UNIT         ?PR?_DELAY_1MS?TMP_HUM_NEW
-            CODE    03D0H     0019H     UNIT         ?C?LIB_CODE
-            CODE    03E9H     0018H     UNIT         ?PR?_DELAY_S?DELAY
-            CODE    0401H     0015H     UNIT         ?PR?INTER0_ISR?TEST
-            CODE    0416H     0015H     UNIT         ?PR?INTER1_ISR?TEST
-            CODE    042BH     0015H     UNIT         ?PR?_DELAY_MS?DELAY
-            CODE    0440H     0013H     UNIT         ?PR?_UART_SENDSTR?UART
-            CODE    0453H     0010H     UNIT         ?PR?UART_INIT?UART
-            CODE    0463H     0007H     UNIT         ?PR?INER0_INIT?TEST
-            CODE    046AH     0007H     UNIT         ?PR?INER1_INIT?TEST
-BL51 BANKED LINKER/LOCATER V6.22                                                      03/01/2017  20:23:44  PAGE 2
+            CODE    0392H     0023H     UNIT         ?PR?MAIN?TEST
+            CODE    03B5H     001EH     UNIT         ?PR?_DELAY_1MS?TMP_HUM_NEW
+            CODE    03D3H     0019H     UNIT         ?C?LIB_CODE
+            CODE    03ECH     0018H     UNIT         ?PR?_DELAY_S?DELAY
+            CODE    0404H     0015H     UNIT         ?PR?INTER0_ISR?TEST
+            CODE    0419H     0015H     UNIT         ?PR?INTER1_ISR?TEST
+            CODE    042EH     0015H     UNIT         ?PR?_DELAY_MS?DELAY
+            CODE    0443H     0013H     UNIT         ?PR?_UART_SENDSTR?UART
+            CODE    0456H     0010H     UNIT         ?PR?UART_INIT?UART
+            CODE    0466H     0007H     UNIT         ?PR?INER0_INIT?TEST
+            CODE    046DH     0007H     UNIT         ?PR?INER1_INIT?TEST
+BL51 BANKED LINKER/LOCATER V6.22                                                      03/01/2017  20:45:46  PAGE 2
 
 
-            CODE    0471H     0003H     UNIT         ?PR?_DELAY_US?DELAY
+            CODE    0474H     0003H     UNIT         ?PR?_DELAY_US?DELAY
 
 
 
@@ -119,7 +119,7 @@ SYMBOL TABLE OF MODULE:  test (?C_STARTUP)
   N:0000H         SYMBOL        XDATASTART
   C:0000H         LINE#         126
   C:020DH         LINE#         133
-BL51 BANKED LINKER/LOCATER V6.22                                                      03/01/2017  20:23:44  PAGE 3
+BL51 BANKED LINKER/LOCATER V6.22                                                      03/01/2017  20:45:46  PAGE 3
 
 
   C:020FH         LINE#         134
@@ -142,10 +142,10 @@ SYMBOL TABLE OF MODULE:  test (?C_STARTUP)
   C:0392H         PUBLIC        main
   D:0098H         PUBLIC        SCON
   D:0088H         PUBLIC        TCON
-  C:0463H         PUBLIC        Iner0_Init
-  C:046AH         PUBLIC        Iner1_Init
-  C:0401H         PUBLIC        Inter0_Isr
-  C:0416H         PUBLIC        Inter1_Isr
+  C:0466H         PUBLIC        Iner0_Init
+  C:046DH         PUBLIC        Iner1_Init
+  C:0404H         PUBLIC        Inter0_Isr
+  C:0419H         PUBLIC        Inter1_Isr
   B:00A8H.0       PUBLIC        EX0
   B:0088H.0       PUBLIC        IT0
   B:00A8H.2       PUBLIC        EX1
@@ -153,20 +153,20 @@ SYMBOL TABLE OF MODULE:  test (?C_STARTUP)
   D:00C8H         PUBLIC        T2CON
   D:00D0H         PUBLIC        PSW
   -------         PROC          INER0_INIT
-  C:0463H         LINE#         13
-  C:0463H         LINE#         14
-  C:0463H         LINE#         15
-  C:0465H         LINE#         16
-  C:0467H         LINE#         17
-  C:0469H         LINE#         18
+  C:0466H         LINE#         13
+  C:0466H         LINE#         14
+  C:0466H         LINE#         15
+  C:0468H         LINE#         16
+  C:046AH         LINE#         17
+  C:046CH         LINE#         18
   -------         ENDPROC       INER0_INIT
   -------         PROC          INER1_INIT
-  C:046AH         LINE#         20
-  C:046AH         LINE#         21
-  C:046AH         LINE#         22
-  C:046CH         LINE#         23
-  C:046EH         LINE#         24
-  C:0470H         LINE#         25
+  C:046DH         LINE#         20
+  C:046DH         LINE#         21
+  C:046DH         LINE#         22
+  C:046FH         LINE#         23
+  C:0471H         LINE#         24
+  C:0473H         LINE#         25
   -------         ENDPROC       INER1_INIT
   -------         PROC          MAIN
   -------         DO            
@@ -179,42 +179,43 @@ SYMBOL TABLE OF MODULE:  test (?C_STARTUP)
   C:0397H         LINE#         63
   C:039AH         LINE#         64
   C:039DH         LINE#         65
-BL51 BANKED LINKER/LOCATER V6.22                                                      03/01/2017  20:23:44  PAGE 4
+BL51 BANKED LINKER/LOCATER V6.22                                                      03/01/2017  20:45:46  PAGE 4
 
 
   C:03A0H         LINE#         68
   C:03A0H         LINE#         69
   C:03A0H         LINE#         70
-  C:03A3H         LINE#         71
-  C:03A8H         LINE#         72
-  C:03ABH         LINE#         73
-  C:03B0H         LINE#         74
+  C:03A3H         LINE#         72
+  C:03A6H         LINE#         73
+  C:03ABH         LINE#         74
+  C:03AEH         LINE#         75
+  C:03B3H         LINE#         76
   -------         ENDPROC       MAIN
   -------         PROC          INTER0_ISR
-  C:0401H         LINE#         80
-  C:0403H         LINE#         82
-  C:0405H         LINE#         84
-  C:0409H         LINE#         85
-  C:0409H         LINE#         86
+  C:0404H         LINE#         82
+  C:0406H         LINE#         84
+  C:0408H         LINE#         86
   C:040CH         LINE#         87
-  C:040EH         LINE#         89
-  C:040EH         LINE#         90
+  C:040CH         LINE#         88
+  C:040FH         LINE#         89
   C:0411H         LINE#         91
-  C:0411H         LINE#         93
-  C:0413H         LINE#         95
+  C:0411H         LINE#         92
+  C:0414H         LINE#         93
+  C:0414H         LINE#         95
+  C:0416H         LINE#         97
   -------         ENDPROC       INTER0_ISR
   -------         PROC          INTER1_ISR
-  C:0416H         LINE#         97
-  C:0418H         LINE#         99
-  C:041AH         LINE#         101
-  C:041EH         LINE#         102
-  C:041EH         LINE#         103
+  C:0419H         LINE#         99
+  C:041BH         LINE#         101
+  C:041DH         LINE#         103
   C:0421H         LINE#         104
-  C:0423H         LINE#         106
-  C:0423H         LINE#         107
+  C:0421H         LINE#         105
+  C:0424H         LINE#         106
   C:0426H         LINE#         108
-  C:0426H         LINE#         110
-  C:0428H         LINE#         112
+  C:0426H         LINE#         109
+  C:0429H         LINE#         110
+  C:0429H         LINE#         112
+  C:042BH         LINE#         114
   -------         ENDPROC       INTER1_ISR
   -------         ENDMOD        TEST
 
@@ -226,31 +227,31 @@ SYMBOL TABLE OF MODULE:  test (?C_STARTUP)
   D:00B8H         PUBLIC        IP
   D:0098H         PUBLIC        SCON
   D:0088H         PUBLIC        TCON
-  C:042BH         PUBLIC        _delay_ms
-  C:0471H         PUBLIC        _delay_us
-  C:03E9H         PUBLIC        _delay_s
+  C:042EH         PUBLIC        _delay_ms
+  C:0474H         PUBLIC        _delay_us
+  C:03ECH         PUBLIC        _delay_s
   D:00C8H         PUBLIC        T2CON
   D:00D0H         PUBLIC        PSW
   -------         PROC          _DELAY_US
   D:0007H         SYMBOL        t
-  C:0471H         LINE#         5
-  C:0471H         LINE#         6
-  C:0471H         LINE#         7
-  C:0473H         LINE#         8
+  C:0474H         LINE#         5
+  C:0474H         LINE#         6
+  C:0474H         LINE#         7
+  C:0476H         LINE#         8
   -------         ENDPROC       _DELAY_US
+BL51 BANKED LINKER/LOCATER V6.22                                                      03/01/2017  20:45:46  PAGE 5
+
+
   -------         PROC          _DELAY_MS
-BL51 BANKED LINKER/LOCATER V6.22                                                      03/01/2017  20:23:44  PAGE 5
-
-
   D:0006H         SYMBOL        t
-  C:042BH         LINE#         10
-  C:042DH         LINE#         11
-  C:042DH         LINE#         12
-  C:0433H         LINE#         13
-  C:0433H         LINE#         14
-  C:0438H         LINE#         15
-  C:043DH         LINE#         16
-  C:043FH         LINE#         17
+  C:042EH         LINE#         10
+  C:0430H         LINE#         11
+  C:0430H         LINE#         12
+  C:0436H         LINE#         13
+  C:0436H         LINE#         14
+  C:043BH         LINE#         15
+  C:0440H         LINE#         16
+  C:0442H         LINE#         17
   -------         ENDPROC       _DELAY_MS
   -------         PROC          _DELAY_S
   D:0005H         SYMBOL        t
@@ -258,16 +259,16 @@ SYMBOL TABLE OF MODULE:  test (?C_STARTUP)
   D:0003H         SYMBOL        i
   D:0004H         SYMBOL        j
   -------         ENDDO         
-  C:03E9H         LINE#         19
-  C:03EBH         LINE#         20
-  C:03EBH         LINE#         22
-  C:03F2H         LINE#         23
-  C:03F2H         LINE#         24
-  C:03F4H         LINE#         25
-  C:03F4H         LINE#         26
-  C:03F9H         LINE#         27
-  C:03FDH         LINE#         28
-  C:0400H         LINE#         29
+  C:03ECH         LINE#         19
+  C:03EEH         LINE#         20
+  C:03EEH         LINE#         22
+  C:03F5H         LINE#         23
+  C:03F5H         LINE#         24
+  C:03F7H         LINE#         25
+  C:03F7H         LINE#         26
+  C:03FCH         LINE#         27
+  C:0400H         LINE#         28
+  C:0403H         LINE#         29
   -------         ENDPROC       _DELAY_S
   -------         ENDMOD        DELAY
 
@@ -282,31 +283,31 @@ SYMBOL TABLE OF MODULE:  test (?C_STARTUP)
   D:00B8H         PUBLIC        IP
   B:0098H.0       PUBLIC        RI
   B:0098H.1       PUBLIC        TI
-  C:0440H         PUBLIC        _uart_sendstr
+  C:0443H         PUBLIC        _uart_sendstr
   D:0099H         PUBLIC        SBUF
   D:0098H         PUBLIC        SCON
   D:0089H         PUBLIC        TMOD
   D:0088H         PUBLIC        TCON
   D:008DH         PUBLIC        TH1
-  C:0453H         PUBLIC        uart_init
+  C:0456H         PUBLIC        uart_init
   D:00E7H         PUBLIC        ISP_CONTR
   B:0088H.6       PUBLIC        TR1
   D:00C8H         PUBLIC        T2CON
   C:0365H         PUBLIC        uart_isr
   D:00D0H         PUBLIC        PSW
   -------         PROC          UART_INIT
-  C:0453H         LINE#         6
-  C:0453H         LINE#         7
-  C:0453H         LINE#         8
-  C:0456H         LINE#         9
-BL51 BANKED LINKER/LOCATER V6.22                                                      03/01/2017  20:23:44  PAGE 6
+  C:0456H         LINE#         6
+  C:0456H         LINE#         7
+  C:0456H         LINE#         8
+BL51 BANKED LINKER/LOCATER V6.22                                                      03/01/2017  20:45:46  PAGE 6
 
 
-  C:0459H         LINE#         10
-  C:045CH         LINE#         11
-  C:045EH         LINE#         13
-  C:0460H         LINE#         14
-  C:0462H         LINE#         15
+  C:0459H         LINE#         9
+  C:045CH         LINE#         10
+  C:045FH         LINE#         11
+  C:0461H         LINE#         13
+  C:0463H         LINE#         14
+  C:0465H         LINE#         15
   -------         ENDPROC       UART_INIT
   -------         PROC          _UART_SENDBYTE
   D:0007H         SYMBOL        byte
@@ -319,14 +320,14 @@ SYMBOL TABLE OF MODULE:  test (?C_STARTUP)
   -------         ENDPROC       _UART_SENDBYTE
   -------         PROC          _UART_SENDSTR
   D:0001H         SYMBOL        s
-  C:0440H         LINE#         27
-  C:0440H         LINE#         28
-  C:0440H         LINE#         29
-  C:0446H         LINE#         30
-  C:0446H         LINE#         31
-  C:0449H         LINE#         32
-  C:0450H         LINE#         33
-  C:0452H         LINE#         34
+  C:0443H         LINE#         27
+  C:0443H         LINE#         28
+  C:0443H         LINE#         29
+  C:0449H         LINE#         30
+  C:0449H         LINE#         31
+  C:044CH         LINE#         32
+  C:0453H         LINE#         33
+  C:0455H         LINE#         34
   -------         ENDPROC       _UART_SENDSTR
   -------         PROC          UART_ISR
   -------         DO            
@@ -358,10 +359,10 @@ SYMBOL TABLE OF MODULE:  test (?C_STARTUP)
   C:0000H         SYMBOL        _ICE_DUMMY_
   C:0319H         SYMBOL        ReadValue
   D:0090H         PUBLIC        P1
+BL51 BANKED LINKER/LOCATER V6.22                                                      03/01/2017  20:45:46  PAGE 7
+
+
   D:00B0H         PUBLIC        P3
-BL51 BANKED LINKER/LOCATER V6.22                                                      03/01/2017  20:23:44  PAGE 7
-
-
   B:00A8H.7       PUBLIC        EA
   D:00A8H         PUBLIC        IE
   D:00B8H         PUBLIC        IP
@@ -374,7 +375,7 @@ SYMBOL TABLE OF MODULE:  test (?C_STARTUP)
   D:002EH         PUBLIC        humi_value
   D:0030H         PUBLIC        temp_value
   C:0173H         PUBLIC        ReadTempAndHumi
-  C:03B2H         PUBLIC        _Delay_1ms
+  C:03B5H         PUBLIC        _Delay_1ms
   D:00C8H         PUBLIC        T2CON
   D:00D0H         PUBLIC        PSW
   -------         PROC          _DELAY_1MS
@@ -383,13 +384,13 @@ SYMBOL TABLE OF MODULE:  test (?C_STARTUP)
   D:0006H         SYMBOL        x
   D:0004H         SYMBOL        y
   -------         ENDDO         
-  C:03B2H         LINE#         27
-  C:03B2H         LINE#         28
-  C:03B2H         LINE#         30
-  C:03BBH         LINE#         31
-  C:03BBH         LINE#         32
-  C:03C8H         LINE#         33
-  C:03CFH         LINE#         34
+  C:03B5H         LINE#         27
+  C:03B5H         LINE#         28
+  C:03B5H         LINE#         30
+  C:03BEH         LINE#         31
+  C:03BEH         LINE#         32
+  C:03CBH         LINE#         33
+  C:03D2H         LINE#         34
   -------         ENDPROC       _DELAY_1MS
   -------         PROC          DELAY_10US
   -------         DO            
@@ -418,10 +419,10 @@ SYMBOL TABLE OF MODULE:  test (?C_STARTUP)
   C:031EH         LINE#         50
   C:0320H         LINE#         51
   C:0320H         LINE#         53
+BL51 BANKED LINKER/LOCATER V6.22                                                      03/01/2017  20:45:46  PAGE 8
+
+
   C:0324H         LINE#         54
-BL51 BANKED LINKER/LOCATER V6.22                                                      03/01/2017  20:23:44  PAGE 8
-
-
   C:0326H         LINE#         56
   C:0332H         LINE#         57
   C:0338H         LINE#         58
@@ -478,10 +479,10 @@ SYMBOL TABLE OF MODULE:  test (?C_STARTUP)
   C:01A6H         LINE#         111
   C:01A6H         LINE#         112
   C:01A8H         LINE#         113
+BL51 BANKED LINKER/LOCATER V6.22                                                      03/01/2017  20:45:46  PAGE 9
+
+
   C:01A8H         LINE#         114
-BL51 BANKED LINKER/LOCATER V6.22                                                      03/01/2017  20:23:44  PAGE 9
-
-
   C:01AAH         LINE#         115
   C:01ACH         LINE#         117
   C:01B8H         LINE#         118
@@ -538,10 +539,10 @@ SYMBOL TABLE OF MODULE:  test (?C_STARTUP)
   B:0080H.5       PUBLIC        H3
   D:00D0H         PUBLIC        PSW
   B:0080H.2       PUBLIC        L1
+BL51 BANKED LINKER/LOCATER V6.22                                                      03/01/2017  20:45:46  PAGE 10
+
+
   B:0080H.1       PUBLIC        L2
-BL51 BANKED LINKER/LOCATER V6.22                                                      03/01/2017  20:23:44  PAGE 10
-
-
   -------         PROC          KEY_SCAN
   C:0026H         LINE#         23
   C:0026H         LINE#         24
@@ -598,10 +599,10 @@ SYMBOL TABLE OF MODULE:  test (?C_STARTUP)
   C:00E7H         LINE#         81
   C:00E9H         LINE#         82
   C:00EBH         LINE#         84
+BL51 BANKED LINKER/LOCATER V6.22                                                      03/01/2017  20:45:46  PAGE 11
+
+
   C:00F4H         LINE#         85
-BL51 BANKED LINKER/LOCATER V6.22                                                      03/01/2017  20:23:44  PAGE 11
-
-
   C:00F4H         LINE#         86
   C:00F9H         LINE#         87
   C:00F9H         LINE#         88
@@ -648,7 +649,7 @@ SYMBOL TABLE OF MODULE:  test (?C_STARTUP)
   -------         ENDMOD        KEY
 
   -------         MODULE        ?C?CLDPTR
-  C:03D0H         PUBLIC        ?C?CLDPTR
+  C:03D3H         PUBLIC        ?C?CLDPTR
   -------         ENDMOD        ?C?CLDPTR
 
 *** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
@@ -658,10 +659,10 @@ SYMBOL TABLE OF MODULE:  test (?C_STARTUP)
     SEGMENT: ?PR?_DELAY_S?DELAY
 
 *** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+BL51 BANKED LINKER/LOCATER V6.22                                                      03/01/2017  20:45:46  PAGE 12
+
+
     SEGMENT: ?PR?_UART_SENDSTR?UART
-BL51 BANKED LINKER/LOCATER V6.22                                                      03/01/2017  20:23:44  PAGE 12
-
-
 
 *** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
     SEGMENT: ?PR?READTEMPANDHUMI?TMP_HUM_NEW
@@ -669,5 +670,5 @@ SYMBOL TABLE OF MODULE:  test (?C_STARTUP)
 *** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
     SEGMENT: ?PR?KEY_SCAN?KEY
 
-Program Size: data=53.0 xdata=0 code=1139
+Program Size: data=53.0 xdata=0 code=1142
 LINK/LOCATE RUN COMPLETE.  5 WARNING(S),  0 ERROR(S)
