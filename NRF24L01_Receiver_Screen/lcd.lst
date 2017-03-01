@@ -1,0 +1,138 @@
+C51 COMPILER V9.51   LCD                                                                   01/16/2016 12:41:48 PAGE 1   
+
+
+C51 COMPILER V9.51, COMPILATION OF MODULE LCD
+OBJECT MODULE PLACED IN lcd.obj
+COMPILER INVOKED BY: D:\360Downloads\C51\BIN\C51.EXE lcd\lcd.c BROWSE INCDIR(.\timer;.\delay;.\lcd;.\uart;.\NRF24L01__Re
+                    -ceiver;.\tmp_hum;.\motor) DEBUG OBJECTEXTEND PRINT(.\lcd.lst) TABS(2) OBJECT(lcd.obj)
+
+line level    source
+
+   1          #include "lcd.h"
+   2          #include "delay.h"
+   3          #include <intrins.h>
+   4          #include <reg52.h>
+   5          
+   6          
+   7          sbit RS = P2^4;
+   8          sbit RW = P2^5;
+   9          sbit E = P2^6;
+  10          
+  11          #define DataPort P0
+  12          
+  13          void lcd_clean()
+  14          {
+  15   1          lcd_write_cmd(0x01);
+  16   1          delay_ms(15);
+  17   1      }
+  18          
+  19          
+  20          void lcd_write_cmd(unsigned char byte)
+  21          {
+  22   1          //命令
+  23   1          RS = 0;
+  24   1          //写有效
+  25   1          RW = 0;
+  26   1          //使能有效
+  27   1          E = 1;
+  28   1          //命令内容
+  29   1          DataPort = byte;
+  30   1          //延时，等待命令输入成功
+  31   1          _nop_();
+  32   1          _nop_();
+  33   1          //关闭使能
+  34   1          E = 0;
+  35   1      }
+  36          
+  37          void lcd_write_data(unsigned char byte)
+  38          {
+  39   1          //数据
+  40   1          RS = 1;
+  41   1          //写
+  42   1          RW = 0;
+  43   1          E = 1;
+  44   1          DataPort = byte;
+  45   1          _nop_();
+  46   1          _nop_();
+  47   1          delay_us(10);//芯片要求延时时间长一点
+  48   1          E = 0;
+  49   1      }
+  50          
+  51          void lcd_init()
+  52          {
+  53   1          /*具体见使用手册，长沙太阳那个*/
+  54   1          delay_ms(15);
+C51 COMPILER V9.51   LCD                                                                   01/16/2016 12:41:48 PAGE 2   
+
+  55   1          /*做三遍，为了确保成功*/
+  56   1          lcd_write_cmd(0x38);//设置显示模式
+  57   1          delay_ms(5);
+  58   1          lcd_write_cmd(0x38);
+  59   1          delay_ms(5);
+  60   1          lcd_write_cmd(0x38);
+  61   1          delay_ms(5);
+  62   1        
+  63   1          
+  64   1          lcd_write_cmd(0x08);//显示关闭
+  65   1          delay_ms(2);
+  66   1          lcd_write_cmd(0x01);//清屏
+  67   1          delay_ms(2);
+  68   1          lcd_write_cmd(0x06);//光标关
+  69   1          delay_ms(2);
+  70   1          lcd_write_cmd(0x0c);//显示开
+  71   1          
+  72   1      }
+  73          
+  74          //写入一个字符，在（x，Y）位置，写入byte
+  75          void lcd_write_char(unsigned char x,unsigned char y,unsigned char byte)
+  76          {
+  77   1          //第一行
+  78   1          if(0 == y)
+  79   1          {
+  80   2              lcd_write_cmd(0x80 + x);
+  81   2          }
+  82   1          //第二行
+  83   1          else if(1 == y)
+  84   1          {
+  85   2              lcd_write_cmd(0x80 + 0x40 + x);
+  86   2          }
+  87   1          
+  88   1          lcd_write_data(byte);
+  89   1      }
+  90          
+  91          
+  92          //打印一个字符串，第一个字符在x，y处
+  93          void lcd_write_str(unsigned char x,unsigned char y,unsigned char *s)
+  94          {
+  95   1          if(0 == y)
+  96   1          {
+  97   2              lcd_write_cmd(0x80 + x);
+  98   2          }
+  99   1          else if(1 == y)
+ 100   1          {
+ 101   2              lcd_write_cmd(0x80 + 0x40 + x);
+ 102   2          }
+ 103   1          
+ 104   1          //当还未到'\0'时，循环打印，光标会自动往后移动，所以不需要手动
+ 105   1          while(*s)
+ 106   1          {
+ 107   2              lcd_write_data(*s);
+ 108   2              s ++;
+ 109   2          }
+ 110   1      }
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    192    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =   ----    ----
+C51 COMPILER V9.51   LCD                                                                   01/16/2016 12:41:48 PAGE 3   
+
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =   ----       3
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

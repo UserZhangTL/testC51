@@ -1,0 +1,1 @@
+"uart\uart.c" OPTIMIZE (8,SPEED) BROWSE INCDIR(.\delay;.\uart;.\NRF24L01__Sender;.\nine_key;.\HandSignal) DEBUG OBJECTEXTEND PRINT(.\uart.lst) TABS (2) OBJECT(uart.obj)

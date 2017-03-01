@@ -1,0 +1,420 @@
+C51 COMPILER V9.53.0.0   LED                                                               07/29/2016 19:21:39 PAGE 1   
+
+
+C51 COMPILER V9.53.0.0, COMPILATION OF MODULE LED
+OBJECT MODULE PLACED IN LED.obj
+COMPILER INVOKED BY: C:\Keil_MDK\C51\BIN\C51.EXE LED16_64\LED.c LARGE OPTIMIZE(8,SPEED) BROWSE INCDIR(.\delay;.\uart;.\N
+                    -RF24L01__Receiver;.\LED16_64;.\WifiESP8266;.\PCF8563;.\DS18B20) DEBUG OBJECTEXTEND PRINT(.\LED.lst) TABS(2) OBJECT(LED.o
+                    -bj)
+
+line level    source
+
+   1          //#include <reg52.h>
+   2          //#include "delay.h"
+   3          //#include "uart.h"
+   4          //#include <stdio.h>
+   5          //#include <string.h>
+   6          //#include "zimo.h"//°üº¬×Ö¿âÍ·ÎÄ¼ş¼´¿ÉÊ¹ÓÃ
+   7          
+   8          #include "AllFunc.h"
+   9          #include "zimo.h"
+  10          
+  11          sbit T_STR = P2^6;       //Ëø´æÒı½Å£¬ÆÁÉÏ±êÊ¶Î»STR
+  12          sbit R1    = P0^4;       //Êı¾İÒı½Å£¬ÆÁÉÏ±êÊ¶R1
+  13          sbit T_CLK = P2^5;       //Ê±ÖÓÒı½Å£¬ÆÁÉÏ±êÊ¶Î»CLK
+  14          sbit OE    = P2^1;       //Ê¹ÄÜÒı½Å£¬ÆÁÉÏ±êÊ¶EN/OE
+  15          sbit A_138     = P0^0;//ABCÎª138ÒëÂëÆ÷Ñ¡ÔñÊä³ö×éºÏ¶Ë
+  16          sbit B_138     = P0^1;
+  17          sbit C_138     = P0^2;
+  18          sbit D_138     = P0^3;//Æ¬Ñ¡Á½Æ¬138Ö®Ò»
+  19          
+  20          
+  21          
+  22          /*
+  23          ½øĞĞ¶şÎ¬Êı×éÆ´½Ó
+  24          ÒòÎªºóÃæĞèÒª¶¯Ì¬µÄÌî³äÄÚÈİ
+  25          ¶¨ÒåÒ»¸öÖ¸ÕëÊı×é£¬¿ÉÒÔ·Å128¸ö×Ö£¬ÓÃÓÚ¶¯Ì¬ÏÔÊ¾
+  26          */
+  27          
+  28          
+  29          unsigned char *OutPutStr[MAX_LEN] = {space};
+  30          
+  31          unsigned char row = 0;//ĞĞ£¬Ã¿´Î½øÈë¼ÓÒ»£¬ÉÏÏŞÊ®ÁùĞĞ
+  32          //ÔÚ¶şÎ¬Êı×éÖĞµÚ¶şÎ¬ÖĞµÄ×Ö½ÚÎ»ÖÃ£¬Ò²¾ÍÊÇÔÚÒ»ĞĞ¹ã¸æÆÁÖĞ£¬ÒªÏÔÊ¾µÄÄÄ°Ë¸ö×Ö½Ú
+  33          unsigned char row_loc = 0;
+  34          bit FifteenHundred_us_Come = NO;//Ä¬ÈÏÊÇÃ»ÓĞµ½Ê±¼äµÄ£¬µ½ÁËµÄ»°£¬»áÔÚwhileÖĞÅĞ¶ÏÈ»ºóÇå¿Õ
+  35          bit One_s_Come         = NO;
+  36          bit Four_hundred_ms_Come       = NO;//400msµ½À´µÄ±êÖ¾Î»£¬ÓÃÀ´ÏÔÊ¾ÒÆÎ»µÄ
+  37          
+  38          //ÉèÖÃÒ»¸öÈ«¾Ö±äÁ¿£¬ÓÃÀ´±£´æĞèÒªÏÔÊ¾µÄÖĞÎÄ×Ö·û¸öÊı£¬¿ÉÒÔÍ¨¹ıºâÁ¿¶şÎ¬Êı×éÖĞµÄÒ»Î»Êı×é³¤¶Ì
+  39          unsigned int char_len = 0;
+  40          
+  41          unsigned char DIS[]={15,14,13,12,11,10,9,8,7,6,5,4,3,2,1,0};//ĞĞÊı¾İ
+  42          
+  43          /*×ÖÄ£ÖĞµÄÎ»ÖÃÆ«ÒÆ*/
+  44          unsigned int temp_char_len = 0;//ÓÃÓÚÑ­»·Ê±¼ÆËã×Ö·û¸öÊı£¬ÉùÃ÷Îª¾²Ì¬±äÁ¿£¬Ö»¶¨ÒåÒ»´Î£¬¾Ö²¿º¯Êı¿É¼û
+  45          
+  46          /*
+  47          ÒòÎªÔÚÒ»¿ªÊ¼Ê¹µÃÖ¸ÕëÊı×éÖĞµÄËùÓĞÔªËØ¶¼Ö¸ÏòÁËspace£¬ËùÒÔ¾Í²»ÔÚĞèÒªÌî³äÁË
+  48          Ö»ĞèÒª¸Ä±ä×Ö·û´®³¤¶È£¬Îª¾²Ì¬ÇĞ»»·şÎñ
+  49          ²ÎÊı£ºÕæÊÇ×Ö·û³¤¶È
+  50          */
+  51          void Modify_Str_Len(unsigned int *old_char_len)
+  52          {
+  53   1          unsigned char i = 0;
+C51 COMPILER V9.53.0.0   LED                                                               07/29/2016 19:21:39 PAGE 2   
+
+  54   1        
+  55   1          if(((*old_char_len) % 4) != 0)//²»ÎªËÄµÄ±¶Êı¸ö×Ö·ûÊıÄ¿
+  56   1          {
+  57   2              *old_char_len = *old_char_len + (4 - ((*old_char_len) % 4));
+  58   2          } 
+  59   1      }
+  60          
+  61          
+  62          /*³õÊ¼»¯Ö¸ÕëÊı×é£¬±£Ö¤²»»á³öÏÖÎŞÓÃµÄÔÓÁÁ*/
+  63          void init_OutPutStr()
+  64          {
+  65   1          unsigned int i = 0;
+  66   1          for(i = 0;i < 128;i ++)
+  67   1          {
+  68   2              OutPutStr[i] = space;
+  69   2          }
+  70   1      }
+  71          
+  72          void InputByte( unsigned  char DataR1) //Ğ´Ò»¸ö×Ö½Ú
+  73          { 
+  74   1          unsigned  char i;
+  75   1          for(i=8; i>0; i--)
+  76   1          {
+  77   2              R1 = !(DataR1&0x80);                   
+  78   2              T_CLK = 0;
+  79   2              T_CLK = 1;
+  80   2              DataR1 = DataR1 << 1; 
+  81   2          } 
+  82   1      }
+  83          
+  84          void Init_Timer0(void)
+  85          {
+  86   1           TMOD |= 0x01;           
+  87   1           EA=1;                      //×ÜÖĞ¶ÏÊ¹ÄÜ
+  88   1           TH0 = (65536 - TIMERVAL) / 256;//200usÒ»´Î
+  89   1           TL0 = (65536 - TIMERVAL) % 256; 
+  90   1        
+  91   1           ET0=1;                     //¶¨Ê±ÖĞ¶ÏÊ¹ÄÜ
+  92   1           TR0=1;                     //´ò¿ª¶¨Ê±Æ÷¿ª¹Ø
+  93   1      }
+  94          
+  95          /*
+  96          ·â×°Ò»²ãº¯Êı£¬×÷Îª½Ó¿Úµ÷ÓÃ
+  97          ²ÎÊıÒ»£º´«Èë¶şÎ¬Êı×éÖ¸Õë
+  98          ²ÎÊı¶ş£ºÕâ¸ö¶şÎ¬Êı×éµÄÒ»Î¬Êı×é³¤¶È£¬Ò²¾ÍÊÇÓĞ¶àÉÙ¸ö×ÖÒªÏÔÊ¾
+  99          */
+ 100          void showLeftRollString(unsigned char *outChar[128],unsigned char char_len)
+ 101          {
+ 102   1          //static unsigned int temp_char_len = 0;//ÓÃÓÚÑ­»·Ê±¼ÆËã×Ö·û¸öÊı£¬ÉùÃ÷Îª¾²Ì¬±äÁ¿£¬Ö»¶¨ÒåÒ»´Î£¬¾Ö²¿º¯Êı¿
+             -É¼û
+ 103   1        
+ 104   1          unsigned int loc_count = 0;//ÓÃÓÚÑ­»·µÄ±äÁ¿£¬ÓÃÓÚ¶¯Ì¬ÕÒµ½ËÄ¸ö×Ö·ûÖĞµÄÄ³Ò»¸ö
+ 105   1        
+ 106   1          //200usµ½À´½øÈëË¢ĞÂ
+ 107   1          if(FifteenHundred_us_Come == YES)
+ 108   1          {
+ 109   2              FifteenHundred_us_Come = NO;//Ò»½øÈë¾ÍÇå¿Õ±êÖ¾Î»
+ 110   2              
+ 111   2              T_STR=0;       //Ëø´æÊÍ·Å
+ 112   2              //´ò³öÒ»ĞĞµÄ×Ö½ÚÔÚµãÕóÆÁµÄÄ³Ò»ĞĞÉÏ
+ 113   2              for(loc_count = temp_char_len;loc_count < (    temp_char_len + 4      );loc_count ++) //ËÄ¸ö×Ö£¬×Ö·û³¤
+             -¶ÈÔÚchar_lenÖĞ
+C51 COMPILER V9.53.0.0   LED                                                               07/29/2016 19:21:39 PAGE 3   
+
+ 114   2              {
+ 115   3                  InputByte(outChar[loc_count][row_loc]);//ÏÔÊ¾¶şÎ¬Êı×éÖĞµÄÄ³Á½¸öÁ¬ĞøµÄ×Ö½Ú£¬µãÁÁÒ»¿éÆÁµÄ16¸öµÆ
+ 116   3                  InputByte(outChar[loc_count][row_loc + 1]);    
+ 117   3              }
+ 118   2              OE=1;  //ÔİÊ±¹Ø±ÕÆÁÄ»£¬·ÀÖ¹³öÏÖ¹íÓ°£¬Èç¹ûÃ»ÓĞÊ¹ÓÃ¸ÃÒı½Å¿ØÖÆÔò»á³öÏÖÍÏÓ°ÏÖÏó¡£
+ 119   2              A_138 = DIS[row] & 0x01;
+ 120   2              B_138 = DIS[row] & 0x02;
+ 121   2              C_138 = DIS[row] & 0x04;
+ 122   2              D_138 = DIS[row] & 0x08;
+ 123   2              T_STR=1;      //Ëø´æÓĞĞ§£¬´ËÊ±Ò»ĞĞµÄÊı¾İÏÔÊ¾µ½ÆÁÉÏ
+ 124   2              OE=0;//Ê¹ÄÜ
+ 125   2            
+ 126   2              
+ 127   2              row ++;//ÖğĞĞÉ¨Ãè£¬É¨ÃèÊ®ÁùĞĞ½áÊø£¬Ò²¾ÍÊÇËµÒ»´ÎÏÔÊ¾ËÄ¸öºº×ÖÒÑ¾­½áÊø
+ 128   2              if(row == 16)
+ 129   2              {
+ 130   3                  row = 0;
+ 131   3                  //Ê¹µÃ¹ıÁË400ms²Å½øĞĞÏÂÒ»´ÎµÄÒÆ¶¯£¬ÊÓ¾õÉÏ±È½ÏÇåÎú
+ 132   3                  if(Four_hundred_ms_Come == YES)
+ 133   3                  {
+ 134   4                      Four_hundred_ms_Come = NO;//Çå¿ÕÒ»ÏÂ  
+ 135   4                    
+ 136   4                      temp_char_len ++;//Ë³ĞòµÄÍùºóÏÔÊ¾Ò»¸ö×Ö·û
+ 137   4                      //ÒªÊÇÔÚÉÏÃæ¼Ó¼ÓµÄ»ù´¡ÉÏ£¬¼ÓÉÏ4¾Í´óÓÚÁË×î´ó×Ö½ÚÊı£¬ÄÇÃ´¾Í²»ĞèÒªÔÙ¼ÌĞøÏÔÊ¾ÁË£¬´ÓÍ·¿ªÊ¼
+ 138   4                      /*ÕâÀï´æÔÚÒ»µãµãÂß¼­ÎÊÌâ£¬¾ÍÊÇ×Ö·ûµÄË³ĞòÒÆÎ»£¬ºÎÊ±¸Ã´ÓÍ·¿ªÊ¼¼ÌĞøÎÊÌâ£¬ÁôÓÉ¶ÁÕß±æÎö*/
+ 139   4                      if((temp_char_len + 4) > char_len)
+ 140   4                      {
+ 141   5                          temp_char_len = 0;
+ 142   5                      }
+ 143   4                      
+ 144   4                  }
+ 145   3              }
+ 146   2             
+ 147   2             //Ò»¸öÒ»Î¬Êı×éÖĞ°üº¬ÁË32¸ö×Ö½Ú
+ 148   2              row_loc += 2;
+ 149   2              if(row_loc == 32)
+ 150   2              {
+ 151   3                  row_loc = 0;   
+ 152   3              }
+ 153   2          }
+ 154   1          
+ 155   1        
+ 156   1      }
+ 157          
+ 158          
+ 159          
+ 160          
+ 161          /*¾²Ì¬ÏÔÊ¾£¬ËÄ×ÖËÄ×ÖµÄ±ä»»Ñ­»·Ë¢ĞÂ*/
+ 162          void showStaticString(unsigned char *outChar[128],unsigned char real_char_len)
+ 163          {
+ 164   1          //static unsigned int temp_char_len = 0;//ÓÃÓÚÑ­»·Ê±¼ÆËã×Ö·û¸öÊı£¬ÉùÃ÷Îª¾²Ì¬±äÁ¿£¬Ö»¶¨ÒåÒ»´Î£¬¾Ö²¿º¯Êı¿
+             -É¼û
+ 165   1          
+ 166   1          unsigned int loc_count;//¼ÆÊı±äÁ¿
+ 167   1      
+ 168   1          
+ 169   1          if(FifteenHundred_us_Come == YES)
+ 170   1          {
+ 171   2              FifteenHundred_us_Come = NO;//Ò»½øÈë¾ÍÇå¿Õ±êÖ¾Î»
+ 172   2            
+ 173   2              T_STR=0;       //Ëø´æÊÍ·Å
+ 174   2              //´ò³öÒ»ĞĞµÄ×Ö½ÚÔÚµãÕóÆÁµÄÄ³Ò»ĞĞÉÏ£¬ĞèÒªÅĞ¶ÏÊÇ·ñÊÇËÄµÄ±¶Êı£¬Òª²»ÊÇ£¬¾ÍÒª¿¼ÂÇ×îºóµÄÏÔÊ¾ÎÊÌâ
+C51 COMPILER V9.53.0.0   LED                                                               07/29/2016 19:21:39 PAGE 4   
+
+ 175   2              for(loc_count = temp_char_len;loc_count < ( ((temp_char_len + 4) > real_char_len) ? real_char_len : (
+             -temp_char_len + 4)  );loc_count ++) //ËÄ¸ö×Ö£¬×Ö·û³¤¶ÈÔÚchar_lenÖĞ
+ 176   2              {
+ 177   3                  InputByte(outChar[loc_count][row_loc]);//ÏÔÊ¾¶şÎ¬Êı×éÖĞµÄÄ³Á½¸öÁ¬ĞøµÄ×Ö½Ú£¬µãÁÁÒ»¿éÆÁµÄ16¸öµÆ
+ 178   3                  InputByte(outChar[loc_count][row_loc + 1]);    
+ 179   3              }
+ 180   2              OE=1;  //ÔİÊ±¹Ø±ÕÆÁÄ»£¬·ÀÖ¹³öÏÖ¹íÓ°£¬Èç¹ûÃ»ÓĞÊ¹ÓÃ¸ÃÒı½Å¿ØÖÆÔò»á³öÏÖÍÏÓ°ÏÖÏó¡£
+ 181   2              A_138 = DIS[row] & 0x01;
+ 182   2              B_138 = DIS[row] & 0x02;
+ 183   2              C_138 = DIS[row] & 0x04;
+ 184   2              D_138 = DIS[row] & 0x08;
+ 185   2              T_STR=1;      //Ëø´æÓĞĞ§£¬´ËÊ±Ò»ĞĞµÄÊı¾İÏÔÊ¾µ½ÆÁÉÏ
+ 186   2              OE=0;//Ê¹ÄÜ
+ 187   2            
+ 188   2              row ++;//ÖğĞĞÉ¨Ãè
+ 189   2              if(row == 16)
+ 190   2              {
+ 191   3                  row = 0;
+ 192   3                
+ 193   3                  if(One_s_Come == YES)//Ò»ÃëÇĞ»»Ò»´Î
+ 194   3                  {
+ 195   4                      One_s_Come = NO;
+ 196   4                      
+ 197   4                      if((temp_char_len + 4) < real_char_len)
+ 198   4                      {
+ 199   5                          temp_char_len += 4;
+ 200   5                      }
+ 201   4                      else
+ 202   4                      {
+ 203   5                          temp_char_len = 0;
+ 204   5                      }
+ 205   4                    
+ 206   4                  }
+ 207   3              }
+ 208   2             
+ 209   2             //Ò»¸öÒ»Î¬Êı×éÖĞ°üº¬ÁË32¸ö×Ö½Ú
+ 210   2              row_loc += 2;
+ 211   2              if(row_loc == 32)
+ 212   2              {
+ 213   3                  row_loc = 0;   
+ 214   3              }
+ 215   2          }
+ 216   1      }
+ 217          
+ 218          
+ 219          //·â×°Ò»²ãº¯Êı£¬´«Èë×Ö·û´®£¬´«ÈëµÄ¿ÉÒÔÎª×Ö·ûÊı×é£¬±¾º¯Êı¶¯Ì¬Ñ°ÕÒ×Ö¿â£¬¶ÔOutPutStr½øĞĞÆ´½Ó
+ 220          /*Ö»¶Ô³£ÓÃASCIIÂëÓĞĞ§*/
+ 221          /*Ê¹ÓÃÁËOutPutStrºÍchar_lenÁ½¸öÈ«¾Ö±äÁ¿*/
+ 222          /*×¢Òâ£º´«ÈëµÄ×Ö·û´®³¤¶È£¬ÒªÊÇÎª×Ö·ûÊı×é£¬²»ÄÜÊ¹ÓÃstrlen£¬ÒòÎªÃ»\0
+ 223            ¿ÉÒÔÊ¹ÓÃsizeof
+ 224          */
+ 225          void transfer_String_to_OutPutStr(unsigned char *strbuf,unsigned int str_len)
+ 226          {
+ 227   1          unsigned int i = 0;
+ 228   1          /*Çå¿ÕËùÓĞ±êÖ¾Î»µÈ*/
+ 229   1          clear_used_extern();
+ 230   1          /*³õÊ¼»¯Ö¸ÕëÊı×é*/
+ 231   1          init_OutPutStr();
+ 232   1          for(i = 0;i < str_len;i ++)
+ 233   1          {
+ 234   2              OutPutStr[i] = ASCII[(strbuf[i] - ' ')];//ASCII±í´Ó¿Õ¸ñ¿ªÊ¼£¬ËùÒÔÏÂ±êÎªÏà¶ÔÓÚ¿Õ¸ñµÄÆ«ÒÆ
+ 235   2          }
+C51 COMPILER V9.53.0.0   LED                                                               07/29/2016 19:21:39 PAGE 5   
+
+ 236   1          char_len = str_len;
+ 237   1          Modify_Str_Len(&char_len);//ĞŞ¸ÄÍê³É£¬Í¬Ê±²¹³ä¿Õ¸ñÍê³É£¬ÏÖÔÚÊÇ×¨ÃÅ¸ø¾²Ì¬ÇĞ»»·şÎñµÄ
+ 238   1      }
+ 239          
+ 240          /*Ã¿´Î¶¼ÒªÇå¿ÕÒ»ÏÂ¸÷¸ö±êÖ¾Î»ºÍÈ«¾Ö±äÁ¿£¬±£Ö¤ÏÂÒ»´ÎµÄ´ÓÍ·¿ªÊ¼Õı³£ÏÔÊ¾*/
+ 241          void clear_used_extern()
+ 242          {
+ 243   1          row = 0;
+ 244   1          row_loc = 0;
+ 245   1          temp_char_len = 0;
+ 246   1      }
+ 247          
+ 248          /*Í¨¹ı×ÖÄ£Ìî³äĞèÒªÏÔÊ¾µÄ¾²Ì¬Êı×éÄÚÈİ*/
+ 249          void showStaitcInfo(unsigned char Needed_Info[][32],unsigned int temp_len)
+ 250          {
+ 251   1          unsigned int i = 0;
+ 252   1          /*Çå¿ÕËùÓĞ±êÖ¾Î»µÈ*/
+ 253   1          clear_used_extern();
+ 254   1          init_OutPutStr();
+ 255   1        
+ 256   1        
+ 257   1          for(i = 0;i < temp_len;i ++)
+ 258   1          {
+ 259   2              OutPutStr[i] = Needed_Info[i];
+ 260   2          }
+ 261   1          
+ 262   1          char_len = temp_len;
+ 263   1          Modify_Str_Len(&char_len);
+ 264   1      }
+ 265          
+ 266          
+ 267          //ÓÃÓÚÏÔÊ¾Ê±¼äµÄÊı×é
+ 268          /*
+ 269          Ê±¼ä³¤¶È½ÏÎª¹Ì¶¨£¡±È½Ï²îµÄº¯Êı£¬²»ÄÜÁé»îµÄĞŞ¸Ä£¬ĞèÒª¿¼ÂÇµÄÒòËØ±È½Ï¶à
+ 270          Ç°ÃæÌáÊ¾Ê±¼ä³¤¶È£¬ºóÃæÕæÕıÊ±¼ä³¤¶ÈÁ½Õß¶¼ĞèÒªÊÖ¶¯¼ÆËã³¤¶È
+ 271          
+ 272          */
+ 273          extern unsigned char Time_Buf_ASCII[100];
+ 274          
+ 275          //Æ´×°Ò»ÏÂÊµÊ±Ê±¼ä£¬ÏÔÊ¾²¿·ÖÁíÍâÔÙËµ
+ 276          void spellRTCTime()
+ 277          {
+ 278   1          unsigned int i = 0;
+ 279   1        
+ 280   1          //Ç°ÃæÌáÊ¾µÄ×Ö·û³¤¶ÈÎª4¸ö¿Õ¸ñ¼ÓºóÃæÎå¸ö×Ö·û
+ 281   1          for(i = 0;i < 9;i ++)
+ 282   1          {
+ 283   2              OutPutStr[i] = TimeInfo[i];
+ 284   2          }
+ 285   1          for(i = 9;i < 28;i ++)
+ 286   1          {
+ 287   2              OutPutStr[i] = ASCII[ (Time_Buf_ASCII[i-9] - ' ')];//Ìî³äÍê±Ï
+ 288   2          }
+ 289   1          
+ 290   1      }
+ 291          
+ 292          /*ÏÔÊ¾¶¯Ì¬ÄÚÈİ£¬ÏÔÊ¾ÄÚÈİÈ«²¿À´×ÔÈ«¾Ö±äÁ¿*/
+ 293          void showAliveTimeInfo()
+ 294          {
+ 295   1          unsigned int i = 0;
+ 296   1          /*Çå¿ÕËùÓĞ±êÖ¾Î»µÈ*/
+ 297   1          clear_used_extern();
+C51 COMPILER V9.53.0.0   LED                                                               07/29/2016 19:21:39 PAGE 6   
+
+ 298   1          init_OutPutStr();
+ 299   1        
+ 300   1          spellRTCTime();//Æ´×°Ê±¼ä
+ 301   1          
+ 302   1          char_len = 28;//¹Ì¶¨Êä³ö³¤¶È¾ÍÊÇ28
+ 303   1          Modify_Str_Len(&char_len);
+ 304   1      }
+ 305          
+ 306          
+ 307          
+ 308          /*************************ÎÂÊª¶ÈÏÔÊ¾²¿·Ö*********************/
+ 309          
+ 310          ///*ÎÂÊª¶ÈÆ´×°ÏÔÊ¾²¿·Ö*/
+ 311          extern unsigned char tmpInfo_buf[8];
+ 312          void spellTmpWithChinese()
+ 313          {
+ 314   1          unsigned int i = 0;
+ 315   1           //Ç°ÃæÌáÊ¾µÄ×Ö·û³¤¶ÈÎª4¸ö¿Õ¸ñ¼ÓºóÃæÎå¸ö×Ö·û
+ 316   1          for(i = 0;i < 9;i ++)
+ 317   1          {
+ 318   2              OutPutStr[i] = TmpInfo[i];
+ 319   2          }
+ 320   1          for(i = 9;i < 12;i ++)
+ 321   1          {
+ 322   2              OutPutStr[i] = ASCII[ (tmpInfo_buf[i-9] - ' ')];//Ìî³äÍê±Ï
+ 323   2          }
+ 324   1          OutPutStr[12] = TmpInfo[7];//ÔÚ×îºóÔÙÆ´½ÓÒ»¸ö¶È×Ö
+ 325   1      }
+ 326          
+ 327          /*ÏÔÊ¾¶¯Ì¬ÄÚÈİ£¬ÏÔÊ¾ÄÚÈİÈ«²¿À´×ÔÈ«¾Ö±äÁ¿*/
+ 328          void showAliveTmpInfo()
+ 329          {
+ 330   1          unsigned int i = 0;
+ 331   1          /*Çå¿ÕËùÓĞ±êÖ¾Î»µÈ*/
+ 332   1          clear_used_extern();
+ 333   1          init_OutPutStr();
+ 334   1        
+ 335   1          spellTmpWithChinese();//Æ´×°Ê±¼ä
+ 336   1          
+ 337   1          char_len = 13;//¹Ì¶¨Êä³ö³¤¶È¾ÍÊÇ12
+ 338   1          Modify_Str_Len(&char_len);
+ 339   1      }
+ 340          
+ 341          
+ 342          
+ 343          
+ 344          
+ 345          /*µ¥¶ÀÊ¹ÓÃµãÕóÆÁÊ±·¶Àı*/
+ 346          //void main()
+ 347          //{
+ 348          //    unsigned char i = 0;
+ 349          //    unsigned char buf[10] = "abcdefghij";
+ 350          //    
+ 351          //    uart_init();
+ 352          //    delay_ms(100);
+ 353          //    //WifiESP8266_Init("Car","01234567","8080");  
+ 354          //  
+ 355          //    Init_Timer0(); //³õÊ¼»¯¶¨Ê±Æ÷
+ 356          //    
+ 357          //    
+ 358          //    transfer_String_to_OutPutStr(buf,sizeof(buf));  
+ 359          //  
+C51 COMPILER V9.53.0.0   LED                                                               07/29/2016 19:21:39 PAGE 7   
+
+ 360          //  
+ 361          //    while(1)
+ 362          //    {
+ 363          //        //showStaticString(OutPutStr,char_len);
+ 364          //        showLeftRollString(OutPutStr,char_len);
+ 365          //        
+ 366          //      
+ 367          //    }
+ 368          //    
+ 369          //}
+ 370          
+ 371          
+ 372          
+ 373          
+ 374          
+ 375          
+ 376          
+ 377          /***********************µÂ·ÉÀ³**************************/
+ 378          
+ 379          
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =   1396    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =    406      31
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =   ----    ----
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =      3    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

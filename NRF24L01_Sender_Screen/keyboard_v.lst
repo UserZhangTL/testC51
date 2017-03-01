@@ -1,0 +1,127 @@
+C51 COMPILER V9.53.0.0   KEYBOARD_V                                                        05/21/2016 12:34:31 PAGE 1   
+
+
+C51 COMPILER V9.53.0.0, COMPILATION OF MODULE KEYBOARD_V
+OBJECT MODULE PLACED IN keyboard_v.obj
+COMPILER INVOKED BY: C:\Keil_MDK\C51\BIN\C51.EXE keyboard_v\keyboard_v.c OPTIMIZE(8,SPEED) BROWSE INCDIR(.\delay;.\uart;
+                    -.\NRF24L01__Sender;.\nine_key) DEBUG OBJECTEXTEND PRINT(.\keyboard_v.lst) TABS(2) OBJECT(keyboard_v.obj)
+
+line level    source
+
+   1          #include "keyboard_v.h"
+   2          #include "delay.h"
+   3          #include <reg52.h>
+   4          
+   5          #define KEYPORT P0
+   6          
+   7          
+   8          unsigned char keyvalue()
+   9          {
+  10   1         unsigned char keyvalue;
+  11   1         KEYPORT = 0xf0;
+  12   1         if(0xf0 != KEYPORT  ) //说明有按键按下了
+  13   1         {
+  14   2             delay_ms(10);
+  15   2             if(0xf0 != KEYPORT) //确实有按键按下了
+  16   2             {
+  17   3                 KEYPORT = 0xfe;
+  18   3                 if(0xfe != KEYPORT)         
+  19   3                 {
+  20   4                       keyvalue = KEYPORT & 0xf0;
+  21   4                       keyvalue += 0x0e;    //去除干扰
+  22   4      //              /*电子琴不需要后沿消抖*/
+  23   4      //                 while(0xfe != KEYPORT);
+  24   4      //                 delay_ms(10);
+  25   4      //                 while(0xfe != KEYPORT); //后沿去抖动
+  26   4                       return keyvalue;            
+  27   4                  }
+  28   3                  
+  29   3                 KEYPORT = 0xfd;
+  30   3                 if(0xfd != KEYPORT)         
+  31   3                 {
+  32   4                       keyvalue = KEYPORT & 0xf0;
+  33   4                       keyvalue += 0x0d;    //去除干扰
+  34   4      //             /*电子琴不需要后沿消抖*/
+  35   4      //                 while(0xfd != KEYPORT);
+  36   4      //                 delay_ms(10);
+  37   4      //                 while(0xfd != KEYPORT); //后沿去抖动
+  38   4                       return keyvalue;            
+  39   4                  } 
+  40   3      
+  41   3                 KEYPORT = 0xfb;
+  42   3                 if(0xfb != KEYPORT)         
+  43   3                 {
+  44   4                       keyvalue = KEYPORT & 0xf0;
+  45   4                       keyvalue += 0x0b;    //去除干扰
+  46   4      //             /*电子琴不需要后沿消抖*/
+  47   4      //                 while(0xfb != KEYPORT);
+  48   4      //                 delay_ms(10);
+  49   4      //                 while(0xfb != KEYPORT); //后沿去抖动
+  50   4                       return keyvalue;            
+  51   4                  }   
+  52   3      
+  53   3                 KEYPORT = 0xf7;
+  54   3                 if(0xf7 != KEYPORT)         
+C51 COMPILER V9.53.0.0   KEYBOARD_V                                                        05/21/2016 12:34:31 PAGE 2   
+
+  55   3                 {
+  56   4                       keyvalue = KEYPORT & 0xf0;
+  57   4                       keyvalue += 0x07;    //去除干扰
+  58   4      //             /*电子琴不需要后沿消抖*/
+  59   4      //                 while(0xf7 != KEYPORT);
+  60   4      //                 delay_ms(10);
+  61   4      //                 while(0xf7 != KEYPORT); //后沿去抖动
+  62   4                       return keyvalue;            
+  63   4                  }               
+  64   3                  
+  65   3             }
+  66   2         }
+  67   1         
+  68   1         return 0xff;
+  69   1      }
+  70          
+  71          /*！！！！！普中开发板专用键盘扫描键值返回函数！！！！！！！*/
+  72          unsigned char key_por()
+  73          {
+  74   1          unsigned char num;
+  75   1          num = keyvalue();
+  76   1          switch(num)
+  77   1          {
+  78   2              case 0x7e:return 4;break;
+  79   2              case 0xbe:return 8;break;
+  80   2              case 0xde:return 12;break;
+  81   2              case 0xee:return 16;break;
+  82   2            
+  83   2              case 0x7d:return 3;break;
+  84   2              case 0xbd:return 7;break;
+  85   2              case 0xdd:return 11;break;
+  86   2              case 0xed:return 15;break;
+  87   2            
+  88   2              case 0x7b:return 2;break;
+  89   2              case 0xbb:return 6;break;
+  90   2              case 0xdb:return 10;break;
+  91   2              case 0xeb:return 14;break;
+  92   2            
+  93   2              case 0x77:return 1;break;
+  94   2              case 0xb7:return 5;break;
+  95   2              case 0xd7:return 9;break;
+  96   2              case 0xe7:return 13;break;
+  97   2            
+  98   2              default:return 0xff;break;
+  99   2          }
+ 100   1          return 0xff;
+ 101   1      }
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    211    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =   ----       1
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

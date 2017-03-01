@@ -1,0 +1,430 @@
+C51 COMPILER V9.53.0.0   WIFIESP8266                                                       07/29/2016 19:21:39 PAGE 1   
+
+
+C51 COMPILER V9.53.0.0, COMPILATION OF MODULE WIFIESP8266
+OBJECT MODULE PLACED IN WifiESP8266.obj
+COMPILER INVOKED BY: C:\Keil_MDK\C51\BIN\C51.EXE WifiESP8266\WifiESP8266.c LARGE OPTIMIZE(8,SPEED) BROWSE INCDIR(.\delay
+                    -;.\uart;.\NRF24L01__Receiver;.\LED16_64;.\WifiESP8266;.\PCF8563;.\DS18B20) DEBUG OBJECTEXTEND PRINT(.\WifiESP8266.lst) T
+                    -ABS(2) OBJECT(WifiESP8266.obj)
+
+line level    source
+
+   1          /********************Ê¹ÓÃÊ¾Àý**********************************/
+   2          
+   3          // /*²âÊÔESP8266£¬Ä¿µÄ:»ñµÃ»ØÏÔÐÅÏ¢*/
+   4          
+   5          // #include <reg52.h>
+   6          // #include "delay.h"
+   7          // #include "WifiESP8266.h"
+   8          // #include "lcd.h"
+   9          // #include "uart.h"
+  10          // #include "delay.h"
+  11          // #include <stdio.h>
+  12          // #include <string.h>
+  13          
+  14          // extern bit Ok_flag;
+  15          // extern bit Str_Ready;
+  16          // extern bit Rev_Str_status;
+  17          // extern bit str_rev_flag;
+  18          // extern bit flag;
+  19          // extern unsigned char Get_str[40];
+  20          // extern int client_num;
+  21          // extern int str_len;
+  22          
+  23          
+  24          // void main()
+  25          // {                  
+  26          //    unsigned char temp_buf[16] = "Tmp:26 Hum:56";
+  27          //    int i = 0;
+  28          //    uart_init();
+  29          //  
+  30          //    lcd_init();
+  31          //    lcd_clean();
+  32          //    delay_ms(500);  
+  33          //   
+  34          //    WifiESP8266_Init("ZTLTest","0123456789","8000");
+  35          //  
+  36          //    while(1)
+  37          //    {
+  38          //        if(OK == SendStrToClint(temp_buf,0,strlen(temp_buf)))
+  39          //          //·¢ËÍ¸øÁ¬½ÓºÅÎª0µÄ¿Í»§£¬hhh£¬Èý¸ö×Ö½Ú³¤¶È
+  40          //        {
+  41          //            lcd_clean();
+  42          //            lcd_write_str(1,1,"SEND OK");
+  43          //        }
+  44          //        else
+  45          //        {
+  46          //            lcd_clean();
+  47          //            lcd_write_str(1,1,"ERROR");
+  48          //        }
+  49          //         
+  50          //        if(check_revStr() == OK)//Ò²¿ÉÒÔ¸Ä³ÉwhileÔÚÄ³¸öº¯ÊýÌåÖÐ×ö
+  51          //        {
+  52          //            /*************Ð´¶Ô»ñÈ¡µÄ×Ö·û´®µÄ²Ù×÷**************/
+  53          //            sprintf(temp_buf,"%d %d %s\0",client_num,str_len,Get_str);
+C51 COMPILER V9.53.0.0   WIFIESP8266                                                       07/29/2016 19:21:39 PAGE 2   
+
+  54          //            lcd_write_str(0,0,temp_buf);
+  55          //            /*****************************************/
+  56          //            
+  57          //          
+  58          //            /*****************²âÊÔ½ÓÊÕ³É¹¦ºó£¬»Ø¸´ÐÅÏ¢£¬¿É²»¼Ó******************/
+  59          // //             if(OK == SendStrToClint(Get_str,0,strlen(Get_str)))
+  60          // //               //·¢ËÍ¸øÁ¬½ÓºÅÎª0µÄ¿Í»§£¬hhh£¬Èý¸ö×Ö½Ú³¤¶È
+  61          // //             {
+  62          // //                 lcd_clean();
+  63          // //                 lcd_write_str(1,1,"SEND OK");
+  64          // //             }
+  65          // //             else
+  66          // //             {
+  67          // //                 lcd_clean();
+  68          // //                 lcd_write_str(1,1,"ERROR");
+  69          // //             }
+  70          //            /******************************************************/
+  71          //          
+  72          //            
+  73          //            /**************************±ØÐëÒª¼Ó£¡********************************/
+  74          //            clean_flag();//µ÷ÓÃwifiÄ£¿éÖÐµÄÇå¿Õº¯Êý
+  75          //            /*******************************************************/
+  76          //        }
+  77          //        
+  78          //        
+  79          
+  80          //    }
+  81          // }
+  82          
+  83          
+  84          
+  85          
+  86          
+  87          
+  88          
+  89          
+  90          /************************************************************/
+  91          /*
+  92          wifiÄ£¿éESP8266Ä£¿é²âÊÔº¯Êý
+  93          ×÷Õß£ºÕÅÌìÀÖ
+  94          ÆðÊ¼Ê±¼ä£º2016/1/19
+  95          ¹¦ÄÜ£ºÍê³É»ù±¾µÄÁ¬½ÓµÈ¹¦ÄÜ
+  96          
+  97          ÐÞ¸ÄÊ±¼ä£º2016/1/28
+  98          ¹¦ÄÜ£ºÄÜ¹»ÊµÏÖÇø·ÖÄÄ¸ö¿Í»§¶Ë·¢À´µÄÊ²Ã´Êý¾Ý
+  99          */
+ 100          
+ 101          #include "AllFunc.h"
+ 102          
+ 103          //½ÓÊÕ×´Ì¬Ä¬ÈÏÎª½áÊø
+ 104          bit Rev_status      = END;//½ÓÊÕ×´Ì¬Î»
+ 105          bit Rev_Str_status  = END;//½ÓÊÕ×Ö·û´®×´Ì¬Î»
+ 106          bit Send_flag       = NO;//·¢ËÍÐÅÏ¢µ½ÊÖ»ú×´Ì¬Î»
+ 107          bit OK_flag         = NO;//³É¹¦×´Ì¬Î»
+ 108          bit Str_Ready       = NO;//Êý¾Ý×¼±¸ºÃ×´Ì¬Î»
+ 109          bit First_dou_flag  = NO;//ÊÇ²»ÊÇµÚÒ»¸ö¶ººÅ
+ 110          
+ 111          //»ñÈ¡µÄ×Ö·û´®ÄÚÈÝ
+ 112          unsigned char  Get_str[40];
+ 113          unsigned char Get_str_loc = 0;
+ 114          
+ 115          //¿Í»§Á¬½ÓºÅ£¬ÒÔ¼°×Ö·û´®³¤¶È
+C51 COMPILER V9.53.0.0   WIFIESP8266                                                       07/29/2016 19:21:39 PAGE 3   
+
+ 116          int client_num = 0;
+ 117          int wifi_str_len    = 0;
+ 118          bit client_num_flag      = END;
+ 119          bit str_len_flag         = END;
+ 120          bit str_rev_flag         = END;
+ 121          
+ 122          
+ 123          
+ 124          /*¹ã¸æÆÁÊ¹ÓÃµ½µÄÒ»Ð©±êÖ¾Î»*/
+ 125          extern bit LastInfo_Flag;//ÇÐ»»ÎªÉÏÒ»¸öÄÚÈÝ
+ 126          extern bit NextInfo_Flag;//ÇÐ»»ÎªÏÂÒ»¸öÄÚÈÝ
+ 127          extern unsigned char MODE_CHANGE;//Ä£Ê½ÇÐ»»µÄflag
+ 128          
+ 129          /*¿ªÊ¼²É¼¯ÃüÁî·¢³ö*/
+ 130          extern bit COLLECT_TMP_FLAG;
+ 131          
+ 132          
+ 133          
+ 134          
+ 135          
+ 136          //¼ì²âÊÇ·ñ½ÓÊÕµ½ÁËÊý¾Ý£¬¹©ÆäËûº¯Êýµ÷ÓÃ£¬Èç¹û½ÓÊÕµ½ÁËÊý¾Ý£¬ÄÇÃ´£¬¾Í¹©ÆäËûº¯ÊýÌáÈ¡È«¾Ö±äÁ¿Get_str
+ 137          //ÔÚÆäËûº¯Êý½ÓÊÕÍêÒÔºó£¬»¹Òªµ÷ÓÃÇå¿Õº¯Êý£¬Çå¿Õ±êÖ¾Î»£¬ÒÔ±ãÏÂÒ»´ÎÊ¹ÓÃ
+ 138          bit check_revStr()
+ 139          {
+ 140   1          if(Str_Ready == OK)
+ 141   1          {
+ 142   2              return OK;
+ 143   2          }
+ 144   1          return NO;
+ 145   1      }
+ 146            
+ 147          void clean_flag()
+ 148          {
+ 149   1          //Çå¿Õ²Ù×÷
+ 150   1          memset(Get_str,0,sizeof(Get_str));
+ 151   1          client_num = 0;
+ 152   1          wifi_str_len = 0;
+ 153   1          Get_str_loc = 0;//Çå¿ÕÒ»²¿·ÖÈ«¾Ö±äÁ¿£¬ÒÔ±ãÏÂÒ»´Î²Ù×÷,Get_strÒªÔÚÍâÃæº¯Êý½ÓÊÕÍêÔÙÇå¿Õ
+ 154   1          Str_Ready = NO;//Çå¿Õ½ÓÊÕÊý¾Ý×¼±¸ºÃ±êÖ¾Î»
+ 155   1      }
+ 156          
+ 157          
+ 158          /*Î´ÍêÉÆ£¬Ã»ÓÐ¼ì²âÊÇ·ñ·¢ËÍ³É¹¦£¬½«×Ö·û´®µÄ½ØÈ¡ºÍ½âÎö¼ÓÈë*/
+ 159          //·¢ËÍ×Ö·û´®¸ø¸ø¿Í»§¶ËÁ¬½ÓºÅÎªnumµÄ¿Í»§¶Ë£¬ÄÚÈÝÎª²ÎÊýstr
+ 160          //str£º·¢ËÍÄÚÈÝ£¬str_len£º·¢ËÍµÄ×Ö½ÚÊý£¬client_num:¿Í»§¶ËÁ¬½ÓºÅ£¬×¢Òâ£º²ÎÊý¾ùÎª×Ö·û´®ÐÎÊ½£¡
+ 161          bit SendStrToClint(unsigned char *str,int client_num,int str_len)//ÓÐ´ý¼ÓÈë×Ö·û´®½âÎö£¬ÓÃÓÚÅÐ¶ÏÊÇ·ñ·¢ËÍ³É¹
+             -¦
+ 162          {
+ 163   1          //ÓÃÓÚÆ´½ÓATÖ¸ÁîµÄbuffer
+ 164   1          unsigned char AT_temp[30] = {0};
+ 165   1          //Æ´½Ó³É£º "AT+CIPSEND=client_num,str_len\r\n"  ÉèÖÃ·¢ËÍ£¬=ºóÃæµÚÒ»¸ö²ÎÊýÊÇ¿Í»§Á¬½ÓºÅ¼´client_num,µÚ¶þ
+             -¸öÊÇÐèÒª·¢ËÍµÄ×Ö½ÚÊý
+ 166   1      
+ 167   1          sprintf(AT_temp,"AT+CIPSEND=%d,%d\r\n",client_num,str_len);
+ 168   1          uart_sendstr(AT_temp);//½«·â×°ÍêµÄATÖ¸Áî·¢ËÍ³öÈ¥
+ 169   1          delay_ms(50);
+ 170   1          //·¢ËÍÐèÒª·¢ËÍµÄ×Ö½Ú
+ 171   1          uart_sendstr(str);
+ 172   1          delay_ms(200);
+ 173   1          //¾­¹ýÒ»ÃëÒÔºó£¬²é¿´ÊÇ·ñÓÐ·¢ËÍ³É¹¦±êÖ¾Î»£¬ÒªÊÇ·¢ËÍ³É¹¦ÁË£¬ÄÇÃ´¾ÍÖÃSend_flagÎªÓÐÐ§
+ 174   1          if(Send_flag == NO)
+ 175   1          {
+C51 COMPILER V9.53.0.0   WIFIESP8266                                                       07/29/2016 19:21:39 PAGE 4   
+
+ 176   2              return NO;
+ 177   2          }
+ 178   1          else
+ 179   1          {
+ 180   2              //·¢ËÍÍê³ÉÒÔºó£¬»¹ÒªÇå¿Õ±êÖ¾Î»ÎªÎÞÐ§£¬ÒÔ±ãÏÂ´ÎÊ¹ÓÃ
+ 181   2              Send_flag = NO;
+ 182   2              return OK;
+ 183   2          }
+ 184   1      }
+ 185          
+ 186          //wifiÄ£¿éµÄ³õÊ¼»¯º¯Êý  wifiÃû×ÖºÍwifiÃÜÂëºÍ¶Ë¿ÚÃû³Æ£¬IPÃû¹Ì¶¨Îª192.168.4.1
+ 187          void WifiESP8266_Init(unsigned char *name,unsigned char *password,unsigned char *port)
+ 188          {
+ 189   1          //ÓÃÓÚÆ´½ÓAT×Ö·û´®ÃüÁî
+ 190   1          unsigned char AT_tempBuf[50] = {0};
+ 191   1      
+ 192   1          //·¢ËÍATÖ¸Áî£¬ÉèÖÃwifiÄ£Ê½µÈ
+ 193   1          uart_sendstr("AT+RST\r\n");//ÖØÆô
+ 194   1          delay_s(1);
+ 195   1      
+ 196   1          uart_sendstr("AT+CWMODE=2\r\n");//ÉèÖÃÎªAPÄ£Ê½£¬wifiÄ£¿éµ±×öÂ·ÓÉÆ÷
+ 197   1          delay_s(1);
+ 198   1      
+ 199   1          //ÉèÖÃwifiÃû³ÆºÍÃÜÂë
+ 200   1          sprintf(AT_tempBuf,"AT+CWSAP=\"%s\",\"%s\",11,4\r\n",name,password);
+ 201   1          uart_sendstr(AT_tempBuf);
+ 202   1          memset(AT_tempBuf,0,sizeof(AT_tempBuf));//ÓÃÍêÇå¿Õ
+ 203   1          delay_s(1);
+ 204   1      
+ 205   1          uart_sendstr("AT+RST\r\n");//ÖØÆô
+ 206   1          delay_s(1);
+ 207   1      
+ 208   1          uart_sendstr("AT+CIPMUX=1\r\n");//ÉèÎª¶àÂ·
+ 209   1          delay_s(1);
+ 210   1      
+ 211   1          //¿ªÊ¼Æ´½Ó´øÓÐ¶Ë¿ÚºÅµÄ×Ö·û´®
+ 212   1          sprintf(AT_tempBuf,"AT+CIPSERVER=1,%s\r\n",port);
+ 213   1          uart_sendstr(AT_tempBuf);//´ò¿ª·þÎñ£¬ÐèÒªÆ´½Ó
+ 214   1          memset(AT_tempBuf,0,sizeof(AT_tempBuf));//ÓÃÍêÇå¿Õ
+ 215   1          delay_s(1);
+ 216   1      }
+ 217          
+ 218          
+ 219          
+ 220          
+ 221          //ÖÐ¶Ï·þÎñº¯Êý£¬ÓÃÓÚÈí¸´Î»
+ 222          void uart_isr() interrupt 4
+ 223          {
+ 224   1          //locÓÃÀ´¶Ôret_msgÈ«¾Ö±äÁ¿¸øÆ«ÒÆ£¬ÓÃÀ´×é×°Ò»¸ö×Ö·û´®
+ 225   1          static unsigned char i = 0;
+ 226   1          unsigned char temp;
+ 227   1          ES = 0;
+ 228   1          temp = SBUF;//temp²»ÄÜ±»¸Ä±ä£¬ÒòÎªÈí¸´Î»ÐèÒªÓÃµ½
+ 229   1        
+ 230   1          switch(temp)
+ 231   1          {
+ 232   2            //ÉÏÒ»¸öÄÚÈÝ
+ 233   2            case '$':
+ 234   2            {
+ 235   3                LastInfo_Flag = YES;
+ 236   3                break;
+ 237   3            }
+C51 COMPILER V9.53.0.0   WIFIESP8266                                                       07/29/2016 19:21:39 PAGE 5   
+
+ 238   2            case '#':
+ 239   2            {
+ 240   3                NextInfo_Flag = YES;
+ 241   3                break;
+ 242   3            }
+ 243   2            //×ó¼ü£¬ÇÐ»»Îª¹ö¶¯Ä£Ê½
+ 244   2            case '&':
+ 245   2            {
+ 246   3                MODE_CHANGE = ROLL;
+ 247   3                break;
+ 248   3            }
+ 249   2            //ÓÒ¼ü£¬ÇÐ»»Îª¾²Ì¬ÇÐ»»Ä£Ê½
+ 250   2            case '*':
+ 251   2            {
+ 252   3                MODE_CHANGE = STATIC;
+ 253   3                break;
+ 254   3            }
+ 255   2            //²É¼¯ÃüÁî
+ 256   2            case '[':
+ 257   2            {
+ 258   3                COLLECT_TMP_FLAG = YES;
+ 259   3                break;
+ 260   3            }
+ 261   2            
+ 262   2            default:break;
+ 263   2          }     
+ 264   1        
+ 265   1        
+ 266   1        
+ 267   1        
+ 268   1          /*ESP8266½ØÈ¡×Ö·û´®²¿·Ö*/
+ 269   1          if(temp == '\n')//¿ªÊ¼·û
+ 270   1          {
+ 271   2              Rev_status = BEGIN;//ÉèÖÃ¿ªÊ¼½ÓÊÕ
+ 272   2          }
+ 273   1          else if(temp == '\r')//½áÊø·û
+ 274   1          {
+ 275   2              Rev_status = END;//ÉèÖÃ½áÊø½ÓÊÕ
+ 276   2          }
+ 277   1          else//³öÀ´\r\nÒÔÍâµÄ×Ö·û
+ 278   1          {
+ 279   2            
+ 280   2              /************************************************/
+ 281   2              //×¨ÃÅÓÃÀ´½ÓÊÕIPDºÍCIFSR£¬½áÊø½ÓÊÕÊ±Òª°ÑRev_Str_statusÖÃÎªÎÞÐ§£¬ÔÙ´Î½øÈëÏÂÃæµÄÑ­»·£¬¼ì²âµÚÒ»¸ö×Ö·û
+ 282   2              if(Rev_Str_status == BEGIN)
+ 283   2              {
+ 284   3                  if((str_rev_flag == END) &&(temp != ':') && (str_len_flag == BEGIN))//¿ªÊ¼½ÓÊÕ×Ö·û´®³¤¶È
+ 285   3                  {
+ 286   4                      wifi_str_len = wifi_str_len * 10 + (temp - '0');
+ 287   4                  }
+ 288   3                  //ÎªÁË³ä·Ö±£Ö¤£¬Ö»ÓÐÒ»ÖÖÇé¿ö£¬²¢ÇÒ½øÈëÒ»´Î£¬²ÉÓÃ¶à¸öflag
+ 289   3                  if((str_rev_flag == END) &&(First_dou_flag == OK) && (temp == ',') && (client_num_flag == BEGIN) &&
+             - (str_len_flag == END))//ÔÙÒ»´Î½ÓÊÕµ½ÁË¶ººÅ£¬¿ªÊ¼½ÓÊÕ×Ö·û´®³¤¶È
+ 290   3                  {
+ 291   4                      str_len_flag = BEGIN;
+ 292   4                      client_num_flag = END;
+ 293   4                  }
+ 294   3                  //µÚÒ»¸ö¶ººÅÀ´ÁÙ£¬½øÈë£¬ÒÔºó²»ÔÙ½øÈë
+ 295   3                  if((str_rev_flag == END) &&(First_dou_flag == NO) && (temp == ',') && (client_num_flag == END))//¶º
+             -ºÅÀ´ÁÙ
+ 296   3                  {
+ 297   4                      client_num_flag = BEGIN;
+C51 COMPILER V9.53.0.0   WIFIESP8266                                                       07/29/2016 19:21:39 PAGE 6   
+
+ 298   4                      First_dou_flag = OK;//ÊÇµÚÒ»¸ö¶ººÅ
+ 299   4                  }
+ 300   3                  //¿ªÊ¼½ÓÊÕÓÃ»§Á¬½ÓºÅ
+ 301   3                  if((str_rev_flag == END) && (temp != ',') && (client_num_flag == BEGIN))
+ 302   3                  {
+ 303   4                      client_num = client_num * 10 + (temp - '0');
+ 304   4                  }
+ 305   3                  
+ 306   3                  //¿ªÊ¼½ÓÊÕ×Ö·û´®
+ 307   3                  if(str_rev_flag == BEGIN)
+ 308   3                  {
+ 309   4                      //±£´æ×Ö·û´®µ½È«¾Ö±äÁ¿ÖÐ£¬ÒÔ±ãºóÃæÊä³ö
+ 310   4                      Get_str[Get_str_loc] = temp;
+ 311   4                      Get_str_loc ++;
+ 312   4                      //Èç¹û×Ö·û´®µÄ³¤¶ÈºÍ¸Õ¸Õ½ÓÊÕµ½µÄÖ¸Ã÷×Ö·û´®³¤¶ÈÏàÍ¬£¬Ôò²»ÔÙ½ÓÊÕ£¬×öÊÕÎ²¹¤×÷
+ 313   4                      if(Get_str_loc == wifi_str_len)
+ 314   4                      {
+ 315   5                          Get_str[Get_str_loc] = '\0';
+ 316   5                          Str_Ready       = OK;//ÉèÖÃ±êÖ¾Î»£¬ËµÃ÷ÎÒÒÑ¾­½ÓÊÕµ½ÁËÒ»¸öÕûµÄ×Ö·û´®ÁË£¬¿ÉÒÔ½øÐÐ²Ù×÷ÁË¡£
+ 317   5                          Rev_Str_status  = END;//Çå¿Õ½ÓÊÕ×Ö·û´®±êÖ¾Î»£¬Ê¹µÃ¿ÉÒÔÔÙ´Î½øÈëÏÂÃæswitchÑ­»·
+ 318   5                          client_num_flag = END;//Çå¿Õ½ÓÊÕclient_num±êÖ¾Î»
+ 319   5                          str_len_flag    = END;//Çå¿Õ½ÓÊÕstr_len×Ö·û´®³¤¶È±êÖ¾Î»
+ 320   5                          str_rev_flag    = END;//Çå¿Õ½ÓÊÕÕæÕý×Ö·û´®±êÖ¾Î»
+ 321   5                          First_dou_flag  = NO;//Çå¿ÕÇø·ÖµÚ¼¸¸ö¶ººÅµÄ±êÖ¾Î»
+ 322   5                      }
+ 323   4                  }
+ 324   3                  
+ 325   3                  if(temp == ':')//ÒªÊÇ¿ªÊ¼ÁË£º£¬ÄÇÃ´ºóÃæ¿ªÊ¼½ÓÊÕ×Ö·û³¤¶ÈÎªstr_lenµÄ×Ö·û´®³¤¶È
+ 326   3                  {
+ 327   4                      str_rev_flag = BEGIN;
+ 328   4                  }
+ 329   3              }
+ 330   2              /************************************************/
+ 331   2            
+ 332   2             /************************************************/
+ 333   2              //ÒªÔÚ½ÓÊÕ×Ö·û´®µÄ±êÖ¾Î»ÎÞÐ§£¬²¢ÇÒ½ÓÊÕ×´Ì¬Î»ÓÐÐ§µÄÊ±ºò²Å×ö
+ 334   2              if((Rev_Str_status == END) && (Rev_status == BEGIN))
+ 335   2              {
+ 336   3                  //¼ì²âµ½µÚÒ»¸öÒÔºó£¬Á¢¿ÌÖÃ½ÓÊÕ±êÖ¾Î»ÎÞÐ§ÔÝÊ±²»½ÓÊÕ
+ 337   3                  switch(temp)
+ 338   3                  {
+ 339   4                      case '+'://ÒªÃ´½ÓÊÕµ½+IPD ÒªÃ´½ÓÊÕµ½ +CIFSR
+ 340   4                      {
+ 341   5                          Rev_Str_status = BEGIN;//¿ªÊ¼½ÓÊÕ£¬ÔÝÊ±²»½øÈëÕâ¸öswitchÑ­»·
+ 342   5                          Rev_status = END;
+ 343   5                          break;
+ 344   5                      }
+ 345   4                      case 'E'://·¢ËÍÊ§°Ü£¬»ØÏÔERROR
+ 346   4                      {
+ 347   5                          Send_flag = NO;
+ 348   5                          Rev_status = END;
+ 349   5                          break;
+ 350   5                      }
+ 351   4                      case 'S'://·¢ËÍ³É¹¦£¬»ØÏÔSEND OK
+ 352   4                      {
+ 353   5                          Send_flag = OK;
+ 354   5                          Rev_status = END;
+ 355   5                          break;
+ 356   5                      }
+ 357   4                      default:
+ 358   4                      {
+ 359   5                          Rev_status = END;
+C51 COMPILER V9.53.0.0   WIFIESP8266                                                       07/29/2016 19:21:39 PAGE 7   
+
+ 360   5                          break;
+ 361   5                      }
+ 362   4                  }
+ 363   3              }
+ 364   2      
+ 365   2          }
+ 366   1          
+ 367   1          
+ 368   1        
+ 369   1      
+ 370   1          //Èí¸´Î»Ê±Ê¹ÓÃ
+ 371   1          if(0x7f == temp)//special for Doflye
+ 372   1          {
+ 373   2              i ++;
+ 374   2              if(10 == i)
+ 375   2              {
+ 376   3                  i = 0;
+ 377   3                  ISP_CONTR = 0xe0;
+ 378   3              }
+ 379   2          }
+ 380   1          else
+ 381   1          {
+ 382   2              i = 0;
+ 383   2          }
+ 384   1          RI = 0;
+ 385   1          ES = 1;
+ 386   1      }
+ 387          
+ 388          
+ 389          
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    849    ----
+   CONSTANT SIZE    =    182    ----
+   XDATA SIZE       =     46      97
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =   ----    ----
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =      9    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

@@ -1,0 +1,1 @@
+"timer\timer.c" LARGE OPTIMIZE (8,SPEED) BROWSE INCDIR(.\timer;.\delay;.\lcd;.\uart;.\NRF24L01__Receiver;.\tmp_hum;.\motor;.\LED16_64) DEBUG OBJECTEXTEND PRINT(.\timer.lst) TABS (2) OBJECT(timer.obj)

@@ -1,0 +1,64 @@
+C51 COMPILER V9.53.0.0   HANDSIGNAL                                                        07/20/2016 14:44:22 PAGE 1   
+
+
+C51 COMPILER V9.53.0.0, COMPILATION OF MODULE HANDSIGNAL
+OBJECT MODULE PLACED IN handsignal.obj
+COMPILER INVOKED BY: C:\Keil_MDK\C51\BIN\C51.EXE HandSignal\handsignal.c OPTIMIZE(8,SPEED) BROWSE INCDIR(.\delay;.\uart;
+                    -.\NRF24L01__Sender;.\nine_key;.\HandSignal) DEBUG OBJECTEXTEND PRINT(.\handsignal.lst) TABS(2) OBJECT(handsignal.obj)
+
+line level    source
+
+   1          #include "AllFunc.h"
+   2          
+   3          
+   4          sbit Left_Avoid = P3^1;//左边的壁障模块
+   5          sbit Right_Avoid = P1^6;//右边的壁障模块
+   6          
+   7          unsigned char Direction_flag = NO;//
+   8          bit One_s_Come = NO;//10ms来临状态位
+   9          
+  10          
+  11          void getHandSignal()//使用全局变量标志位Direction_flag表示
+  12          {
+  13   1          if((Left_Avoid == 0) || (Right_Avoid == 0))
+  14   1          {
+  15   2              if((Left_Avoid == 0) && (Right_Avoid == 1))//右摆
+  16   2              {
+  17   3                  One_s_Come = NO;//开始计数了，先清空一下，保证下面计数有效
+  18   3                  while((One_s_Come == NO) && (Right_Avoid == 1));//两者之一跳出
+  19   3                  if(One_s_Come == YES)//修改到0了，说明没有正确操作，退出
+  20   3                  {
+  21   4                      Direction_flag = NO;
+  22   4                  }
+  23   3                  else if(Right_Avoid == 0)
+  24   3                  { 
+  25   4                      delay_ms(5);
+  26   4                      if((Right_Avoid == 0) && (Left_Avoid == 1)) 
+  27   4                      {                 
+  28   5                          Direction_flag = RIGHT;
+  29   5                      }
+  30   4                  }
+  31   3              }
+  32   2              
+  33   2          }
+  34   1        
+  35   1        
+  36   1        
+  37   1      
+  38   1      }
+  39          
+  40          
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =     45    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =      1    ----
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =      1    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

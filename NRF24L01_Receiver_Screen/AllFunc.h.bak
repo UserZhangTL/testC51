@@ -1,0 +1,31 @@
+#ifndef __ALLFUNC_H__
+#define __ALLFUNC_H__
+
+#include <reg52.h>
+#include <intrins.h>
+#include <stdio.h>
+#include "AllFunc.h"
+#include "delay.h"
+#include "Beep.h"
+#include "keyboard_v.h"
+#include "uart.h"
+#include "lcd.h"
+#include "tmp.h"
+#include "timer.h"
+#include "all_time.h"
+#include "AD.h"
+#include "IIC.h"
+
+
+//led 流水灯,与刷动数码管分时使用端口
+#define LED P0
+
+//动态刷新数码管
+#define SEG P0
+sbit Duan_s = P3^6;
+sbit Wei_s  = P3^7;
+
+
+
+
+#endif

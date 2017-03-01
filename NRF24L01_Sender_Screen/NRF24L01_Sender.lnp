@@ -1,0 +1,8 @@
+"STARTUP.obj",
+"main_test.obj",
+"delay.obj",
+"uart.obj",
+"NRF24L01_Sender.obj",
+"key.obj",
+"handsignal.obj" 
+TO "NRF24L01_Sender" 

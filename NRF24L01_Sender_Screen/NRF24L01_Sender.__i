@@ -1,0 +1,1 @@
+"NRF24L01__Sender\NRF24L01_Sender.c" OPTIMIZE (8,SPEED) BROWSE INCDIR(.\delay;.\uart;.\NRF24L01__Sender;.\nine_key;.\HandSignal) DEBUG OBJECTEXTEND PRINT(.\NRF24L01_Sender.lst) TABS (2) OBJECT(NRF24L01_Sender.obj)
