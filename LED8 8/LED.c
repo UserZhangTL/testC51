@@ -16,6 +16,14 @@ sbit LATCH_B = P2^0;
 sbit SRCLK_B = P2^1;
 sbit SER_B = P2^2;
 
+/*
+add a new function
+*/
+void func()
+{
+	  
+}
+
 
 void SendByte(unsigned char dat)
 {
